@@ -135,71 +135,121 @@ const words = [
     ]//:
 ];
 
-const canvas = document.querySelector("#app");
-const context = canvas.getContext("2d");
-
-const config = {
-    mode: '24',
-    particle: {
-        size: 10,
-        padding: 1,
-        gap: 1
-    },
-}
-
-// 8 words such that each 7 particle wide
-canvas.width = 8 * config.particle.size * 7 + 7 * config.particle.gap * config.particle.size;
-// 1 line such that 10 particle high
-canvas.height = config.particle.size * 10;
-
-function particle(x, y, context) {
-    const { size, padding } = config.particle;
-
+function path( context, callback ) {
     context.beginPath();
-    context.arc( x + (size / 2 - padding), y + (size / 2 - padding), size / 2 - padding, 0, 2 * Math.PI );
-    // context.fillStyle = "rgba(0, 0, 0, 0.5)";
-    // context.globalAlpha = .5;
-    context.fillStyle = "#000000";
-    context.fill();
+    callback();
     context.closePath();
 }
 
-function drawWord( spec, hOffset=0) {
-    const { size, gap } = config.particle;
-    hOffset = hOffset * 7 * size + hOffset * gap * size;
+class ParticleTimer {
+    constructor( canvas ) {
+        this.canvas = canvas;
+        this.context = canvas.getContext("2d");
+        this.config = {
+            mode: '24',
+            particle: {
+                size: 10,
+                padding: 1,
+                gap: 1
+            },
+        }
 
-    spec.forEach( (row, v) => {
-        row.forEach( (cell, h) => {
-            let x = h * size + hOffset, y = v * size;
-            if( cell ) particle( x, y, context );
+        this.particles = {
+            still: [],
+            moving: [],
+        };
+
+        this.init();
+    }
+
+    init() {
+        const { size, gap } = this.config.particle;
+        this.canvas.width = 8 * size * 7 + 7 * gap * size;
+        this.canvas.height = size * 10;
+
+        setInterval(() => {
+            this.particles.still = [];
+            this.particles.moving = [];
+
+            requestAnimationFrame(() => {
+                this.render();
+            });
+        }, 1000);
+    }
+
+    parseCharacter( spec, hOffset=0, callback ) {
+        const { size, gap, padding } = this.config.particle;
+        hOffset = hOffset * 7 * size + hOffset * gap * size;
+
+        spec.forEach( (row, v) => {
+            row.forEach( (cell, h) => {
+                let x = h * size + hOffset, y = v * size;
+                if( cell ) callback( x, y, size, padding );
+            });
         });
-    });
+    }
+
+    generateParticles( spec, hOffset, pushTo=[], config ) {
+        this.parseCharacter( spec, hOffset, (x, y, size, padding) => {
+            pushTo.push( new Particle(x, y, size, padding, config) );
+        });
+    }
+
+    renderString(str) {
+        const ch = str[ str.length - 1 ]
+        this.generateParticles( words[ch], str.length-1, this.particles.moving, { fill: "#FF0000"} );
+
+        str.split("").forEach((ch, i) => {
+            if( ch === ':' ) ch = 10;
+            this.generateParticles( words[ch], i, this.particles.still );
+        });
+    }
+
+    getTimeString() {
+        return /\d\d:\d\d:\d\d/.exec( new Date )[0];
+    }
+
+    render() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.renderString( this.getTimeString() );
+        console.log( this.particles );
+        this.particles.still.forEach( particle => particle.draw(this.context) );
+        this.particles.moving.forEach( particle => particle.draw(this.context) );
+    }
 }
 
-function drawString( str ) {
-    str.split("").forEach((ch, i) => {
-        if( ch === ':' ) ch = 10;
-        drawWord( words[ch], i );
-    });
+
+class Particle {
+    constructor(x, y, size, padding, config) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.padding = padding;
+        this.fill = "#000000";
+
+        Object.assign( this, config );
+    }
+
+    render( context ) {
+        path( context, () => {
+            context.arc(
+                this.x + (this.size / 2 - this.padding),
+                this.y + (this.size / 2 - this.padding),
+                this.size / 2 - this.padding,
+                0,
+                2 * Math.PI
+            );
+            context.fillStyle = this.fill;
+            context.fill();
+        });
+    }
+
+    draw( context ) {
+        this.render( context );
+    }
 }
 
-function getTimeString() {
-    const date = new Date();
-
-    const hour = date.getHours().toString().padStart(2, "0");
-    const minute = date.getMinutes().toString().padStart(2, "0");
-    const second = date.getSeconds().toString().padStart(2, "0");
-
-    return `${ hour }:${ minute }:${ second }`;
-}
-
-setInterval(() => {
-    requestAnimationFrame(() => {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        drawString( getTimeString() );
-    });
-}, 1000);
-
-drawString( "00:00:00" );
-// particle(0, 0, config.particle.size, context );
-console.log( canvas, context );
+new ParticleTimer(
+    document.querySelector("#app")
+);
