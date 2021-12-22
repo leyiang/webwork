@@ -33,6 +33,19 @@
             display: flex;
             gap: 2rem;
         }
+
+        .magnet-cursor {
+            background-color: pink;
+            border-radius: 50%;
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 15px;
+            height: 15px;
+            transition: all ease-out .15s;
+            z-index: 1;
+        }
     </style>
 
     <script src="Vec.js"></script>
@@ -40,6 +53,7 @@
 </head>
 <body>
 
+    <div class="magnet-cursor"></div>
     <div class="list">
         <button class="magnet">Magnet Mouse</button>
         <button class="magnet">Magnet Mouse</button>
@@ -49,9 +63,8 @@
 
     <script>
         new Magnet({
-            el: [
-                ...document.querySelectorAll(".magnet")
-            ]
+            el: document.querySelectorAll(".magnet"),
+            follow: [ document.querySelector(".magnet-cursor") ],
         });
     </script>
 

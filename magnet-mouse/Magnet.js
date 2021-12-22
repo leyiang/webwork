@@ -1,12 +1,15 @@
 class Magnet {
     constructor( options ) {
         const defaultOptions = {
-            margin: 10
+            el: [],
+            follow: [],
+            margin: 10,
         };
 
-        this.el = options.el;
         this.mouse = new Vec(0, 0);
-        this.margin = options.margin || defaultOptions.margin;
+
+        const config = this.config = {};
+        Object.assign( config, defaultOptions, options );
 
         this.init();
     }
@@ -18,7 +21,10 @@ class Magnet {
     }
 
     initEl() {
-        this.el.forEach( el => {
+        [
+            ...this.config.el,
+            ...this.config.follow
+        ].forEach( el => {
             const rect = el.getBoundingClientRect();
 
             el.rect = {
@@ -48,20 +54,28 @@ class Magnet {
     loop() {
         requestAnimationFrame(() => this.loop());
 
-        this.el.forEach( el => {
+        this.config.el.forEach( el => {
             const center = this.getCenterPoint( el );
             const diff = this.mouse.clone().sub( center );
 
             if(
-                this.mouse.x >= (el.rect.left - this.margin) &&
-                this.mouse.y >= (el.rect.top - this.margin) &&
-                this.mouse.x <= (el.rect.right + this.margin) &&
-                this.mouse.y <= (el.rect.bottom + this.margin)
+                this.mouse.x >= (el.rect.left - this.config.margin) &&
+                this.mouse.y >= (el.rect.top - this.config.margin) &&
+                this.mouse.x <= (el.rect.right + this.config.margin) &&
+                this.mouse.y <= (el.rect.bottom + this.config.margin)
             ) {
                 el.style.transform = `translate(${ diff.x }px, ${ diff.y }px)`
             } else {
                 el.style.transform = ``;
             }
+        });
+
+        this.config.follow.forEach( el => {
+            const rect = el.getBoundingClientRect();
+            const x = this.mouse.x - rect.width / 2;
+            const y = this.mouse.y - rect.height / 2;
+
+            el.style.transform = `translate(${ x }px, ${ y }px)`
         });
     }
 }
