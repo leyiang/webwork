@@ -34,23 +34,27 @@ class Magnet {
             ...this.config.el,
             ...this.config.follow
         ].forEach( el => {
-            const rect = el.getBoundingClientRect();
-
-            el.boundingRect = rect;
-            el.rect = {
-                top: rect.y,
-                left: rect.x,
-                right: rect.x + rect.width,
-                bottom: rect.y + rect.height,
-            };
-
             el.justEnter = false;
+            this.getElementRect( el );
         });
+    }
+
+    getElementRect( el ) {
+        const rect = el.getBoundingClientRect();
+
+        el.boundingRect = rect;
+
+        el.rect = {
+            top: rect.y,
+            left: rect.x,
+            right: rect.x + rect.width,
+            bottom: rect.y + rect.height,
+        };
     }
 
     listen() {
         document.addEventListener("mousemove", e => {
-            this.mouse = new Vec( e.clientX, e.clientY );
+            this.mouse = new Vec( e.pageX - window.pageXOffset, e.pageY - window.pageYOffset );
         });
     }
 
@@ -78,7 +82,9 @@ class Magnet {
             const center = this.getCenterPoint( el );
             const diff = this.mouse.clone().sub( center );
 
-            diff.mul( 1.5 )
+            diff.mul( 1.5 );
+
+            this.getElementRect( el );
 
             if(
                 this.mouse.x >= (el.rect.left - this.config.margin) &&
@@ -94,6 +100,7 @@ class Magnet {
                     el.justEnter = true;
                     this.entering = true;
                 }
+
             } else {
                 el.style.transform = ``;
                 if( el.justEnter ) {
