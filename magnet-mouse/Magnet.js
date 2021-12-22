@@ -35,6 +35,7 @@ class Magnet {
         ].forEach( el => {
             const rect = el.getBoundingClientRect();
 
+            el.boundingRect = rect;
             el.rect = {
                 top: rect.y,
                 left: rect.x,
@@ -98,9 +99,14 @@ class Magnet {
         });
 
         this.config.follow.forEach( el => {
+            let mouse = this.mouse;
+            if( el.followEl ) {
+                mouse = this.getCenterPoint( el.followEl );
+            }
+
             const rect = el.getBoundingClientRect();
-            const x = this.mouse.x - rect.width / 2;
-            const y = this.mouse.y - rect.height / 2;
+            const x = mouse.x - rect.width / 2;
+            const y = mouse.y - rect.height / 2;
 
             el.style.transform = `translate(${ x }px, ${ y }px)`
         });

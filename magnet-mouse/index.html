@@ -14,12 +14,13 @@
 
         .magnet {
             font-size: 1rem;
-            padding: 1rem 2rem;
+            padding: 1.5rem 2rem;
             cursor: pointer;
             border: none;
             background-color: #1577ee;
             color: #FFF;
             transition: all ease .5s;
+            border-radius: 10rem;
         }
 
         body {
@@ -43,15 +44,15 @@
             left: 0;
             width: 15px;
             height: 15px;
-            transition: transform ease-out .15s, width .5s, height .5s;
+            transition: all .5s, transform ease-out .2s;
             z-index: 1;
         }
 
         .magnet-cursor.active {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(255, 255, 255, 0.5);
-            backdrop-filter: hue-rotate(120deg) brightness(1.5);
+            transition: all .5s, transform ease-out .075s;
+            box-sizing: border-box;
+            border: 4px solid #000;
+            background-color: transparent;
         }
     </style>
 
@@ -75,14 +76,27 @@
             follow: ".magnet-cursor",
 
             enter( el ) {
-                this.config.follow.forEach( el => {
-                    el.classList.add("active");
+                const rect = el.getBoundingClientRect();
+
+                this.config.follow.forEach( follow => {
+                    follow.classList.add("active");
+                    follow.style.borderRadius = window.getComputedStyle( el )["borderRadius"];
+                    follow.style.width = rect.width + "px";
+                    follow.style.height = rect.height + "px";
+
+                    follow.followEl = el;
                 });
             },
 
             leave() {
-                this.config.follow.forEach( el => {
-                    el.classList.remove("active");
+                this.config.follow.forEach( follow  => {
+                    follow.classList.remove("active");
+
+                    follow.style.borderRadius = '';
+                    follow.style.width = '';
+                    follow.style.height = '';
+
+                    follow.followEl = null;
                 });
             }
         });
