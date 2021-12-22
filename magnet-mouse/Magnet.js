@@ -21,6 +21,14 @@ class Magnet {
     }
 
     initEl() {
+        if( typeof this.config.el === "string" ) {
+            this.config.el = document.querySelectorAll( this.config.el );
+        }
+
+        if( typeof this.config.follow === "string" ) {
+            this.config.follow = document.querySelectorAll( this.config.follow );
+        }
+
         [
             ...this.config.el,
             ...this.config.follow
@@ -33,6 +41,8 @@ class Magnet {
                 right: rect.x + rect.width,
                 bottom: rect.y + rect.height,
             };
+
+            el.justEnter = false;
         });
     }
 
@@ -51,6 +61,14 @@ class Magnet {
         );
     }
 
+    fireCallback( type, ...args ) {
+        const callback = this.config[ type ];
+
+        if( callback && typeof callback === "function" ) {
+            callback.call( this, ...args );
+        }
+    }
+
     loop() {
         requestAnimationFrame(() => this.loop());
 
@@ -65,8 +83,17 @@ class Magnet {
                 this.mouse.y <= (el.rect.bottom + this.config.margin)
             ) {
                 el.style.transform = `translate(${ diff.x }px, ${ diff.y }px)`
+
+                if( ! el.justEnter ) {
+                    this.fireCallback("enter", el );
+                    el.justEnter = true;
+                }
             } else {
                 el.style.transform = ``;
+                if( el.justEnter ) {
+                    this.fireCallback("leave", el );
+                    el.justEnter = false;
+                }
             }
         });
 
