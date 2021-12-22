@@ -11,6 +11,7 @@ class Magnet {
         const config = this.config = {};
         Object.assign( config, defaultOptions, options );
 
+        this.entering = false;
         this.init();
     }
 
@@ -73,9 +74,11 @@ class Magnet {
     loop() {
         requestAnimationFrame(() => this.loop());
 
-        this.config.el.forEach( el => {
+        this.config.el.forEach( (el, i) => {
             const center = this.getCenterPoint( el );
             const diff = this.mouse.clone().sub( center );
+
+            diff.mul( 1.5 )
 
             if(
                 this.mouse.x >= (el.rect.left - this.config.margin) &&
@@ -85,15 +88,19 @@ class Magnet {
             ) {
                 el.style.transform = `translate(${ diff.x }px, ${ diff.y }px)`
 
-                if( ! el.justEnter ) {
+                if( ! el.justEnter && ! this.entering ) {
                     this.fireCallback("enter", el );
+                    console.log("Enter", i );
                     el.justEnter = true;
+                    this.entering = true;
                 }
             } else {
                 el.style.transform = ``;
                 if( el.justEnter ) {
                     this.fireCallback("leave", el );
                     el.justEnter = false;
+                    console.log("Leave", i );
+                    this.entering = false;
                 }
             }
         });
