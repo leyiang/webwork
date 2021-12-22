@@ -28,61 +28,31 @@
             justify-content: center;
             margin: 0;
         }
+
+        .list {
+            display: flex;
+            gap: 2rem;
+        }
     </style>
 
     <script src="Vec.js"></script>
+    <script src="Magnet.js"></script>
 </head>
 <body>
 
-    <button class="magnet">Magnet Mouse</button>
+    <div class="list">
+        <button class="magnet">Magnet Mouse</button>
+        <button class="magnet">Magnet Mouse</button>
+        <button class="magnet">Magnet Mouse</button>
+        <button class="magnet">Magnet Mouse</button>
+    </div>
 
     <script>
-        const range = 200;
-        const button = document.querySelector(".magnet");
-        const rect = button.getBoundingClientRect();
-        const buttonInfo = {
-            top: rect.y,
-            left: rect.x,
-            right: rect.x + rect.width,
-            bottom: rect.y + rect.height,
-        };
-
-        const getCenterPoint = (el) => {
-            const rect = el.getBoundingClientRect();
-
-            return new Vec(
-                rect.x + rect.width / 2,
-                rect.y + rect.height / 2,
-            );
-        };
-
-        let mouse = new Vec(0, 0);
-
-        document.addEventListener("mousemove", e => {
-            mouse  = new Vec( e.clientX, e.clientY );
+        new Magnet({
+            el: [
+                ...document.querySelectorAll(".magnet")
+            ]
         });
-
-        const margin = 10;
-
-        const loop = () => {
-            requestAnimationFrame( loop );
-
-            const center = getCenterPoint( button );
-            const diff = mouse.clone().sub( center );
-
-            if(
-                mouse.x >= (buttonInfo.left - margin) &&
-                mouse.y >= (buttonInfo.top - margin) &&
-                mouse.x <= (buttonInfo.right + margin) &&
-                mouse.y <= (buttonInfo.bottom + margin)
-            ) {
-                button.style.transform = `translate(${ diff.x }px, ${ diff.y }px)`
-            } else {
-                button.style.transform = ``;
-            }
-        }
-
-        loop();
     </script>
 
 </body>
