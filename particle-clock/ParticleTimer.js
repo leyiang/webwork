@@ -1,3 +1,5 @@
+import Particle from "./Particle.js";
+
 const words = [
     [
         [0,0,1,1,1,0,0],
@@ -134,8 +136,6 @@ const words = [
         [0,0,0,0,0,0,0]
     ]//:
 ];
-
-import Particle from "./Particle.js";
 
 export default class ParticleTimer {
     constructor( canvas ) {

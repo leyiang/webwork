@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Magnet Mouse</title>
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        .magnet {
+            font-size: 1rem;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border: none;
+            background-color: #1577ee;
+            color: #FFF;
+            transition: all ease .3s;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+    </style>
+
+    <script src="Vec.js"></script>
+</head>
+<body>
+
+    <button class="magnet">Magnet Mouse</button>
+
+    <script>
+        const range = 200;
+        const button = document.querySelector(".magnet");
+        const rect = button.getBoundingClientRect();
+        const buttonInfo = {
+            top: rect.y,
+            left: rect.x,
+            right: rect.x + rect.width,
+            bottom: rect.y + rect.height,
+        };
+
+        const getCenterPoint = (el) => {
+            const rect = el.getBoundingClientRect();
+
+            return new Vec(
+                rect.x + rect.width / 2,
+                rect.y + rect.height / 2,
+            );
+        };
+
+        let mouse = new Vec(0, 0);
+
+        document.addEventListener("mousemove", e => {
+            mouse  = new Vec( e.clientX, e.clientY );
+        });
+
+        const margin = 10;
+
+        const loop = () => {
+            requestAnimationFrame( loop );
+
+            const center = getCenterPoint( button );
+            const diff = mouse.clone().sub( center );
+
+            if(
+                mouse.x >= (buttonInfo.left - margin) &&
+                mouse.y >= (buttonInfo.top - margin) &&
+                mouse.x <= (buttonInfo.right + margin) &&
+                mouse.y <= (buttonInfo.bottom + margin)
+            ) {
+                button.style.transform = `translate(${ diff.x }px, ${ diff.y }px)`
+            } else {
+                button.style.transform = ``;
+            }
+        }
+
+        loop();
+    </script>
+
+</body>
+</html>
