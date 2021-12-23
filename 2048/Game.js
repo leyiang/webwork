@@ -15,9 +15,9 @@ class Game {
             this.grid.push(Array(4).fill(null));
         }
 
-        this.insertAt(0, 0, 2);
         this.insertAt(0, 1, 2);
-        this.insertAt(0, 2, 2);
+        this.insertAt(2, 1, 2);
+        this.insertAt(0, 3, 2);
         // this.insertAt(1, 1, 4);
         // this.insertAt(1, 0, 2);
         // this.insertAt(1, 1, 4);
@@ -196,8 +196,10 @@ class Game {
 
                 if( cur && next && cur.val === next.val ) {
                     this.remove.push({
-                        to: cur,
-                        cells: [ cur, next ]
+                        to: left ? cur : next,
+                        cells: left
+                            ? [ cur, next ]
+                            : [ next, cur ]
                     });
 
                     const newAdd = cur;

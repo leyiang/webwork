@@ -17,10 +17,11 @@
         .cell {
             width: 100px;
             height: 100px;
+            border-radius: 5px;
         }
 
         .block {
-            background-color: #DDD;
+            background-color: rgba(238, 228, 218, 0.35);
         }
 
         .game-container {
@@ -28,7 +29,7 @@
         }
 
         .arena {
-            background-color: #EEE;
+            background-color: #bbada0;
             display: flex;
             flex-wrap: wrap;
         }
@@ -47,12 +48,74 @@
             font-size: 3rem;
             font-weight: 700;
             background-color: orange;
-            color: #FFF;
             font-family: "Arial Black", serif;
             position: absolute;
             transition: all .3s;
             top: 0;
             left: 0;
+            color: #776e65;
+        }
+
+        .cell[ data-value="2" ] {
+            background: #eee4da;
+        }
+
+        .cell[ data-value="4" ] {
+            background: #eee1c9;
+        }
+
+        .cell[ data-value="8" ] {
+            color: #f9f6f2;
+            background: #f3b27a;
+        }
+
+        .cell[ data-value="16" ] {
+            color: #f9f6f2;
+            background: #f69664;
+        }
+
+        .cell[ data-value="32" ] {
+            color: #f9f6f2;
+            background: #f77c5f;
+        }
+
+        .cell[ data-value="64" ] {
+            color: #f9f6f2;
+            background: #f75f3b;
+        }
+
+        .cell[ data-value="128" ] {
+            color: #f9f6f2;
+            background: #edd073;
+        }
+
+        .cell[ data-value="128" ] {
+            color: #f9f6f2;
+            background: #edd073;
+        }
+
+        .cell[ data-value="256" ] {
+            color: #f9f6f2;
+            background: #edcc62;
+            box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.3174603175), inset 0 0 0 1px rgba(255, 255, 255, 0.1904761905);
+        }
+
+        .cell[ data-value="512" ] {
+            color: #f9f6f2;
+            background: #edc950;
+            box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.3968253968), inset 0 0 0 1px rgba(255, 255, 255, 0.2380952381);
+        }
+
+        .cell[ data-value="1024" ] {
+            color: #f9f6f2;
+            background: #edc53f;
+            box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.4761904762), inset 0 0 0 1px rgba(255, 255, 255, 0.2857142857);
+        }
+
+        .cell[ data-value="2048" ] {
+            color: #f9f6f2;
+            background: #edc22e;
+            box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.5555555556), inset 0 0 0 1px rgba(255, 255, 255, 0.3333333333);
         }
 
         .cell[ data-value="128" ],
