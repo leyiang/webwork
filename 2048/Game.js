@@ -4,37 +4,48 @@ class Game {
         this.remove = [];
 
         this.container = container;
+        this.moved = false;
+
         this.init();
     }
 
     init() {
         this.grid = [];
-        window.grid = this.grid;
+        window.game = this;
 
         for (let x = 0; x < 4; x++) {
             this.grid.push(Array(4).fill(null));
         }
 
-        this.insertAt(0, 1, 2);
-        this.insertAt(2, 1, 2);
-        this.insertAt(0, 3, 2);
+        // this.insertAt(0, 1, 2);
+        // this.insertAt(2, 1, 2);
+        // this.insertAt(1, 1, 2);
+        // this.insertAt(0, 3, 2);
         // this.insertAt(1, 1, 4);
         // this.insertAt(1, 0, 2);
         // this.insertAt(1, 1, 4);
         // this.insertAt(2, 2, 2);
 
-        // this.randomInsert();
-        // this.randomInsert();
+        this.randomInsert();
+        this.randomInsert();
 
         this.listen();
     }
 
     listen() {
+        let pressing = false;
+
         window.addEventListener("keydown", e => {
             const { key } = e;
 
             if( ['ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft'].includes(key) ) {
                 e.preventDefault();
+
+                if( pressing ) return;
+                pressing = true;
+                setTimeout(() => {
+                    pressing = false;
+                }, 100 );
 
                 const left = {
                     "ArrowUp": true,
@@ -84,11 +95,21 @@ class Game {
             });
         });
 
-        this.randomInsert( true );
+        if( this.moved ) {
+            setTimeout(() => {
+                if( this.grid.flat().filter(el => el).length === 16 ) {
+                    alert("You Lose!");
+                    return;
+                }
+                this.randomInsert();
+            }, 200 );
+        }
+
+        this.moved = false;
     }
 
     randomInsert(assert=true) {
-        let val = Math.random() < .8 ? 2 : 4;
+        let val = Math.random() < .95 ? 2 : 4;
 
         do {
             let [x, y] = randomPos();
@@ -174,12 +195,16 @@ class Game {
                 ? row.filter(cell => cell).concat(Array(4).fill(null)).slice(0, 4)
                 : Array(4 ).fill(null).concat(row.filter(cell => cell)).slice(-4);
 
-            console.log( row );
-
             row.forEach( (cell, x) => {
                 if( cell ) {
-                    cell.x = col ? y : x;
-                    cell.y = col ? x : y;
+                    let rx = col ? y : x;
+                    let ry = col ? x : y;
+
+                    if( cell.x !== rx || cell.y !== ry ) {
+                        cell.x = rx;
+                        cell.y = ry;
+                        this.moved = true;
+                    }
                 }
             });
 
@@ -191,23 +216,46 @@ class Game {
 
     merge( left=true ) {
         this.grid = this.grid.map(row => {
-            for(let i = 0; i < row.length - 1; i++) {
-                const cur = row[i], next = row[i+1];
+            if( left ) {
+                for(let i = 0; i < row.length - 1; i++) {
+                    const cur = row[i], next = row[i+1];
 
-                if( cur && next && cur.val === next.val ) {
-                    this.remove.push({
-                        to: left ? cur : next,
-                        cells: left
-                            ? [ cur, next ]
-                            : [ next, cur ]
-                    });
+                    if( cur && next && cur.val === next.val ) {
+                        this.moved = true;
+                        this.remove.push({
+                            to: cur,
+                            cells: [ cur, next ]
+                        });
 
-                    const newAdd = cur;
-                    newAdd.val *= 2;
-                    this.append.push( newAdd );
+                        const newAdd = cur;
+                        newAdd.val *= 2;
+                        this.append.push( newAdd );
 
-                    row[i] = null;
-                    row[i+1] = null;
+                        row[i] = null;
+                        row[i+1] = null;
+                        i++;
+                    }
+                }
+            } else {
+                for(let i = row.length - 1; i > 0; i--) {
+                    const cur = row[i], next = row[i-1];
+
+                    if( cur && next && cur.val === next.val ) {
+                        this.moved = true;
+
+                        this.remove.push({
+                            to: cur,
+                            cells: [ cur, next ]
+                        });
+
+                        const newAdd = cur;
+                        newAdd.val *= 2;
+                        this.append.push( newAdd );
+
+                        row[i] = null;
+                        row[i-1] = null;
+                        i--;
+                    }
                 }
             }
 
