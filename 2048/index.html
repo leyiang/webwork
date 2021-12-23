@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>2048 Game - Forever Playing</title>
+
+    <style>
+        :root {
+            --size: 100px;
+            --gap: 1rem;
+        }
+
+        .block,
+        .cell {
+            width: 100px;
+            height: 100px;
+        }
+
+        .block {
+            background-color: #DDD;
+        }
+
+        .game-container {
+            position: relative;
+        }
+
+        .arena {
+            background-color: #EEE;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .arena,
+        .grid {
+            width: calc(4 * var(--size) + 3 * var(--gap));
+            gap: var(--gap);
+            padding: var(--gap);
+        }
+
+        .cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+            background-color: orange;
+            color: #FFF;
+            font-family: "Arial Black", serif;
+            position: absolute;
+            transition: all .3s;
+            top: 0;
+            left: 0;
+        }
+
+        .cell[ data-value="128" ],
+        .cell[ data-value="256" ],
+        .cell[ data-value="512" ] {
+            font-size: 2.5rem;
+        }
+
+        .cell[ data-value="1024" ],
+        .cell[ data-value="2048" ] {
+            font-size: 2rem;
+        }
+
+        .cell::before {
+            content: attr(data-value);
+        }
+
+        .grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .cell.just-insert {
+            animation: insert .25s both;
+        }
+
+        .cell.merge {
+            animation-delay: .15s;
+        }
+
+        @keyframes insert {
+            from {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+    </style>
+
+    <script src="Game.js"></script>
+</head>
+<body>
+
+    <div class="game-container">
+        <div class="arena">
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+            <div class="block"></div>
+        </div>
+
+        <div class="grid">
+            <!--            <div class="cell" data-value="2"></div>-->
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
