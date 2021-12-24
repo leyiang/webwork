@@ -42,8 +42,8 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 15px;
-            height: 15px;
+            width: 10px;
+            height: 10px;
             transition: all .5s, transform ease-out .15s;
             z-index: 1;
         }
@@ -70,57 +70,97 @@
             border: 4px solid rgba(0, 0, 0, 1);
             background-color: transparent;
         }
+
+        .cursor {
+            pointer-events: none;
+            width: 10px;
+            height: 10px;
+            background-color: #000;
+            border-radius: 50%;
+            opacity: 0;
+            transition: all .3s, transform 0s;
+            will-change: transform, opacity;
+
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cursor.visible {
+            opacity: 1;
+        }
+
+        .cursor.test {
+            background-color: red;
+        }
+        .cursor.bigger {
+            width: 60px;
+            height: 60px;
+        }
+        .cursor.text {
+            width: 100px;
+            height: 100px;
+            color: #FFF;
+
+            text-align: center;
+            /*transition: opacity ;*/
+        }
+
+        .cursor .cursor-text {
+            transform: scale(0);
+            transition: all .1s;
+        }
+
+        .cursor.text .cursor-text {
+            transform: scale(1);
+        }
+
+        .cursor.exclusion {
+            mix-blend-mode: exclusion;
+            background-color: #FFF;
+            width: 100px;
+            height: 100px;
+        }
     </style>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.0/gsap.min.js"></script>
     <script src="Vec.js"></script>
     <script src="Magnet.js"></script>
+    <script src="Cursor.js"></script>
 </head>
 <body>
 
-    <div class="test" style="width: 10px; height: 1000px;"></div>
-
     <div class="list">
-        <button class="magnet">Magnet Mouse</button>
-        <button class="magnet">Magnet Mouse</button>
-        <button class="magnet">Magnet Mouse</button>
-        <button class="magnet">Magnet Mouse</button>
+        <button class="magnet" data-cursor="test">Change Color</button>
+        <button class="magnet" data-cursor="bigger">Change Size</button>
+
+        <button class="magnet" data-text="Click!">Set Text</button>
+
+        <div class="card" style="width: 300px; height: 400px; padding: 1rem; background-color: pink;"
+             data-stick="#sticker" data-cursor="exclusion"
+        >
+            <button class="magnet" id="sticker">Magnet Mouse</button>
+        </div>
+
+        <div class="card" style="width: 300px; height: 400px; padding: 1rem; background-color: pink;"
+             data-cursor="exclusion" data-magnet
+        >
+            Magnet
+        </div>
     </div>
 
-    <div class="magnet-cursor"></div>
-<!--    <div class="magnet-cursor"></div>-->
-<!--    <div class="magnet-cursor"></div>-->
 <!--    <div class="magnet-cursor"></div>-->
 <!--    <div class="magnet-cursor"></div>-->
 
     <script>
-        new Magnet({
-            el: ".magnet",
-            follow: ".magnet-cursor",
+        const cursor = new Cursor();
 
-            enter( el ) {
-                const rect = el.getBoundingClientRect();
-
-                this.config.follow.forEach( follow => {
-                    follow.classList.add("active");
-                    follow.style.borderRadius = window.getComputedStyle( el )["borderRadius"];
-                    follow.style.width = rect.width + "px";
-                    follow.style.height = rect.height + "px";
-
-                    follow.followEl = el;
-                });
-            },
-
-            leave() {
-                this.config.follow.forEach( follow  => {
-                    follow.classList.remove("active");
-
-                    follow.style.borderRadius = '';
-                    follow.style.width = '';
-                    follow.style.height = '';
-
-                    follow.followEl = null;
-                });
-            }
+        document.querySelectorAll("[data-magnet]").forEach( el => {
+            new Magnet( el );
         });
     </script>
 
