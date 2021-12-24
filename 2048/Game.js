@@ -17,13 +17,10 @@ class Game {
             this.grid.push(Array(4).fill(null));
         }
 
+        // this.insertAt(0, 0, 2);
         // this.insertAt(0, 1, 2);
-        // this.insertAt(2, 1, 2);
-        // this.insertAt(1, 1, 2);
+        // this.insertAt(0, 2, 2);
         // this.insertAt(0, 3, 2);
-        // this.insertAt(1, 1, 4);
-        // this.insertAt(1, 0, 2);
-        // this.insertAt(1, 1, 4);
         // this.insertAt(2, 2, 2);
 
         this.randomInsert();
