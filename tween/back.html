@@ -8,6 +8,18 @@
     <title>Tween</title>
 
     <style>
+        body, html {
+            margin: 0;
+            height: 100%;
+        }
+
+        #app {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         #screen {
             border: 1px solid #000;
         }
@@ -301,7 +313,7 @@
                     if( diff < task.duration ) {
                         task.keys.forEach( (key, i) => {
                             // task.el[key] = linear( diff/task.duration, diff, task.froms[i], task.to[i], task.duration);
-                            task.el[key] = Easing.easeOutElastic( diff, task.froms[i], task.diffs[i], task.duration);
+                            task.el[key] = Easing.easeOutBounce( diff, task.froms[i], task.diffs[i], task.duration);
                         });
                     } else {
                         task.keys.forEach( (key, i) => {
@@ -312,13 +324,6 @@
                 });
             }
         };
-
-        tween.add({
-            el: rect,
-            keys: ['x', 'y', 'w', 'h'],
-            to: [600, 400, 100, 100 ],
-            duration: 2000
-        })
 
         const render = () => {
             context.clearRect(0, 0, 900, 600);
@@ -332,7 +337,16 @@
             requestAnimationFrame( render );
         };
 
-        render();
+        const start = () => {
+            tween.add({
+                el: rect,
+                keys: ['x', 'y', 'w', 'h'],
+                to: [600, 400, 100, 100 ],
+                duration: 1000
+            });
+
+            render();
+        };
     </script>
 </body>
 </html>
