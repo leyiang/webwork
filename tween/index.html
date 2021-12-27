@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tween</title>
+
+    <style>
+        #screen {
+            border: 1px solid #000;
+        }
+
+        .cursor {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #000;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+    </style>
+
+    <script src="Tween.js"></script>
+</head>
+<body>
+
+<div class="cursor"></div>
+
+<script>
+    const cursor = document.querySelector(".cursor");
+    const mouse = {
+        x: 0,
+        y: 0
+    }
+    document.addEventListener("keydown", e => {
+        if( e.key === " " ) {
+            console.log( cursor );
+        }
+    })
+
+    let run = false;
+
+    const tween = createTween( (target, { x, y }) => {
+        target.style.transform = `translate(${ x }px, ${ y }px)`;
+    });
+    //
+    // const tween = liike( (target, { x, y }) => {
+    //     target.style.transform = `translate(${ x }px, ${ y }px)`;
+    // });
+
+
+    window.addEventListener("mousemove", function(e) {
+        // if( run ) return;
+        // run = true;
+
+        mouse.x = e.clientX - 5;
+        mouse.y = e.clientY - 5;
+
+        tween( cursor, {
+            to: mouse,
+            duration: 200,
+            easing: "quadOut"
+        });
+        // tween( cursor, {
+        //     to: mouse
+        // })
+
+        // Tween.to( cursor, mouse );
+        //
+        // setTimeout(() => {
+        //     run = false;
+        // }, 20 );
+    });
+</script>
+
+</body>
+</html>
