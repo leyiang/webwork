@@ -68,7 +68,19 @@
         }
 
         .shape.yellow {
-            background-color: #FBE9D8;
+            /*background-color: #FBE9D8;*/
+            background: linear-gradient( #56ccf2, #2f80ed );
+            animation: hue 5s infinite;
+        }
+
+        @keyframes hue {
+            from {
+                filter: hue-rotate(0);
+            }
+
+            to {
+                filter: hue-rotate(360deg);
+            }
         }
 
         .shape video {
@@ -118,6 +130,18 @@
         .block.inverse header::before {
             background-color: #000;
         }
+
+        .pattern-header {
+            width: 100%;
+            height: 100%;
+            mix-blend-mode: multiply;
+
+            background-color: #ffffff;
+            opacity: 0.1;
+            background-size: 21px 21px;
+            background-image: repeating-linear-gradient(45deg, #000000 0, #000000 2.1px, #ffffff 0, #ffffff 50%);
+        }
+
     </style>
 </head>
 <body>
@@ -152,6 +176,16 @@
         <header>
             <h1>AWESOME <br> HOVER</h1>
         </header>
+    </div>
+</section>
+
+<section class="block">
+    <div class="block-inner" style="height: 100%">
+        <div class="shape">
+            <video muted autoplay loop src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/ocean-small.webm"></video>
+        </div>
+
+        <div class="pattern-header"></div>
     </div>
 </section>
 
@@ -191,12 +225,12 @@
             const circle = circles[i];
             const prev = circles[i - 1];
 
-            updatePosition(circle, mouse.x, mouse.y);
-            // if (!prev) {
-            // } else {
-            //     const rect = prev.getBoundingClientRect();
-            //     updatePosition(circle, rect.left + rect.width / 2, rect.top + rect.height / 2);
-            // }
+            if (!prev) {
+                updatePosition(circle, mouse.x, mouse.y);
+            } else {
+                const rect = prev.getBoundingClientRect();
+                updatePosition(circle, rect.left + rect.width / 2, rect.top + rect.height / 2);
+            }
         }
     }
 
