@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Masonry</title>
+
+    <style>
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .magic-grid-item {
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .magic-grid-container {
+            background-color: #333;
+            justify-content: center;
+            align-content: center;
+        }
+    </style>
+
+    <script src="MagicGrid.js"></script>
+    <script src="ImagePool.js"></script>
+</head>
+<body>
+
+    <div class="magic-grid-container"></div>
+    <div class="scroll-to-bottom"></div>
+
+    <script>
+        const pool = new ImagePool( 10 );
+        const grid = new MagicGrid( pool );
+        const scroll = document.querySelector(".scroll-to-bottom");
+
+        const io = new IntersectionObserver(entries => {
+            /**
+             * Add Images to magic grid
+             */
+            grid.append();
+
+            /**
+             * If there's still blank area in first page
+             */
+            if( entries[0].isIntersecting ) {
+
+                /**
+                 * Unobserve scroll-notify element
+                 */
+                io.unobserve( scroll );
+
+                /**
+                 * After a period of time, re-observe it
+                 * So the intersection observer callback will be triggered to add more images
+                 */
+                setTimeout(() => {
+                    io.observe( scroll );
+                }, 100 );
+            }
+        }, {
+            threshold: 0,
+            rootMargin: "800px"
+        });
+
+        io.observe( scroll );
+
+    </script>
+</body>
+</html>
