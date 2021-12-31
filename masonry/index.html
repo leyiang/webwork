@@ -68,6 +68,11 @@
             rootMargin: "800px"
         });
 
+        window.addEventListener("resize", () => {
+            grid.setup();
+            grid.resize();
+        });
+
         io.observe( scroll );
 
     </script>

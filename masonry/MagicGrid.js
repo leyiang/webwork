@@ -50,6 +50,20 @@ class MagicGrid {
         this.el = document.querySelector( this.config.el );
 
         /**
+         * Reference of all grid-item ( wrapper div of image )
+         */
+        this.items = [];
+
+        this.setup();
+
+        /**
+         * Save all the height info, use to choose the shortest column
+         */
+        this.record = Array( this.col ).fill( 0 );
+    }
+
+    setup() {
+        /**
          * Get The Width of container
          */
         this.elWidth = this.el.getBoundingClientRect().width;
@@ -58,17 +72,8 @@ class MagicGrid {
          * Compute how many column can be put
          */
         this.col = Math.floor( (this.elWidth + this.config.gap) / (this.config.width + this.config.gap) );
-
-        /**
-         * Reference of all grid-item ( wrapper div of image )
-         */
-        this.items = [];
-
-        /**
-         * Save all the height info, use to choose the shortest column
-         */
-        this.record = Array( this.col ).fill( 0 );
     }
+
 
     append( test=true) {
         /**
@@ -89,8 +94,8 @@ class MagicGrid {
 
                 const el = document.createElement("div");
 
-                el.classList.add("magic-gird-item");
-                el.style = `width: ${ this.config.width }px; position: absolute;`
+                el.classList.add("magic-grid-item");
+                el.style = `width: ${ this.config.width }px; position: absolute; transition: transform .3s`
                 el.appendChild( image );
 
                 this.items.push( el );
@@ -125,7 +130,7 @@ class MagicGrid {
     }
 
     resize() {
-        this.record = Array( this.record.length ).fill( 0 );
+        this.record = Array( this.col ).fill( 0 );
 
         this.items.forEach( (item, t) => {
             const col = this.getSlot();
