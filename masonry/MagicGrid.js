@@ -95,13 +95,17 @@ class MagicGrid {
                 const el = document.createElement("div");
 
                 el.classList.add("magic-grid-item");
-                el.style = `width: ${ this.config.width }px; position: absolute; transition: transform .3s`
+                el.style = `width: ${ this.config.width }px; position: absolute; will-change: transform;`
                 el.appendChild( image );
 
                 this.items.push( el );
                 this.el.appendChild( el );
 
                 el.__height = image.height;
+
+                setTimeout(() => {
+                    el.style.transition = "transform .3s";
+                });
             });
 
             if( test ) this.resize();
@@ -130,6 +134,7 @@ class MagicGrid {
     }
 
     resize() {
+        let maxHeight = 0;
         this.record = Array( this.col ).fill( 0 );
 
         this.items.forEach( (item, t) => {
@@ -138,9 +143,9 @@ class MagicGrid {
 
             this.setPos( item, col.x, col.y );
             this.record[ col.i ] += rect.height + this.config.gap;
+            if( this.record[ col.i ] > maxHeight ) maxHeight = this.record[ col.i ];
         });
 
-        let maxHeight = Math.max.apply(null, this.record );
         this.el.style.height = maxHeight + "px";
     }
 }
