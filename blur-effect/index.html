@@ -66,6 +66,15 @@
     :checked + .target .icon-share-qq {
         transform: scale(1) translate(70px, 60px);
     }
+
+    /*body {*/
+    /*    background-color: #000;*/
+    /*}*/
+    /**/
+    /*.test {*/
+    /*    display: block;*/
+    /*    filter: url(#colorTest);*/
+    /*}*/
 </style>
 
 <body>
@@ -76,10 +85,18 @@
             <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
             <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 19 -9" result="goo" />
 <!--            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9" result="goo" />-->
-            <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+<!--            <feComposite in="SourceGraphic" in2="goo" operator="atop" />-->
         </filter>
     </defs>
 </svg>
+
+<svg width="0" height="0">
+    <filter id="colorTest">
+        <feColorMatrix in="SourceGraphic" mode="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 19 -9" result="goo" />
+    </filter>
+</svg>
+
+<!--<img src="img.png" alt="colorTest" class="test">-->
 
 <input type="checkbox" id="share">
 
