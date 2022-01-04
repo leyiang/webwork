@@ -7,15 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Submit Button</title>
     <link rel="stylesheet" href="./style.css">
+
+    <script src="./app.js" defer></script>
 </head>
 <body>
 
-<input type="checkbox" id="submit-checkbox" class="hide-form-el">
+<button class="submit-button btn">
+    <span class="progress"></span>
+    <span class="text">Submit</span>
 
-<label role="button" class="btn test" for="submit-checkbox" data-text="Submit">
-    <svg viewBox="0 0 25 30" style="background: transparent" width="30px">
+    <svg viewBox="0 0 25 30" width="30px">
         <path class="check" d="M2,19.2C5.9,23.6,9.4,28,9.4,28L23,2"></path>
     </svg>
-</label>
+</button>
+
+
 </body>
 </html>

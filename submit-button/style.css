@@ -35,6 +35,12 @@ button, [role="button"] {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    font: 700 1.25rem Arial;
+}
+
+.submit-button svg {
+    position: absolute;
 }
 
 .btn svg path {
@@ -42,74 +48,15 @@ button, [role="button"] {
     fill: none;
     stroke-width: 3;
     stroke-linecap: round;
+    width: 30px;
     stroke-dasharray: 42;
     stroke-dashoffset: 42;
 }
 
-.btn::before {
-    content: attr(data-text);
-    font: 700 1.25rem Arial;
-    text-align: center;
+.submit-button .progress {
     position: absolute;
     inset: 0;
-    line-height: 60px;
-}
-
-#submit-checkbox:checked + .btn {
-    border-radius: var(--radius);
-    animation: squish calc( var(--squish-time) * 3 ) forwards;
-}
-
-#submit-checkbox:checked + .btn::before {
-    opacity: 0;
-}
-
-#submit-checkbox:checked + .btn::after {
-    content: '';
-    position: absolute;
-    inset: 0 unset;
-    left: 0;
-    width: 0;
-    height: 100%;
-    border-radius: var(--radius);
+    width: 0px;
     background-color: #AAA;
-
-    animation: expand var(--expand-time) var(--squish-time) forwards;
-}
-
-#submit-checkbox:checked + .btn svg path {
-    animation: stroke var(--stroke-time) calc( var(--squish-time) + var(--expand-time) + var(--back-time) ) forwards;
-}
-
-@keyframes squish {
-    33.333% {
-        width: 320px;
-        height: 10px;
-    }
-
-    66.666% {
-        width: 320px;
-        height: 10px;
-        border-radius: var(--radius);
-        background: rgb(43, 45, 47);
-    }
-
-    100% {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background-color: #71DFBE;
-    }
-}
-
-@keyframes expand {
-    99.99% {
-        width: 100%;
-    }
-}
-
-@keyframes stroke {
-    100% {
-        stroke-dashoffset: 0;
-    }
+    border-radius: var(--radius);
 }
