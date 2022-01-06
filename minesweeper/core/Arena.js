@@ -1,3 +1,5 @@
+import Cell from "./Cell.js";
+
 export default class Arena {
     constructor( { col, row, mine }) {
         this.col = col;
@@ -6,35 +8,28 @@ export default class Arena {
 
         this.initialized = false;
 
-        this.cells = Array( col * row ).fill( null ).map( () => ({
-            open: false,
-            val: null,
-            flag: false,
-        }));
+        this.cells = [];
+
+        for(let y = 0; y < this.row; y++) {
+            for(let x = 0; x < this.col; x++) {
+                this.cells.push( new Cell(x, y) );
+            }
+        }
 
         this.init();
-        this.initArena();
     }
 
     init() {
         game.event.on("click", (x, y) => {
             // Generate Arena
-            this.initArena();
+            this.initArena( x, y );
 
             let origin = this.get( x, y );
             if( ! origin ) return;
             if( origin.open ) return;
             if( origin.flag ) return;
 
-            if( origin.val === "*" ) {
-                console.log("You Lose");
-            } else if( ! origin.open ) {
-                if( origin.val === 0 ) {
-                    this.floodFill( x, y );
-                } else {
-                    origin.open = true;
-                }
-            }
+            this.click( origin );
         });
 
         game.event.on("right", (x, y) => {
@@ -43,27 +38,31 @@ export default class Arena {
         });
     }
 
-    initArena() {
+    initArena(x, y) {
         if( ! this.initialized ) {
             this.initialized = true;
-            this.generate();
+            this.generate(x, y);
         }
     }
 
-    generate() {
-        this.placeMine();
+    generate(x, y) {
+        this.placeMine(x, y);
         this.count();
     }
 
-    placeMine() {
+    placeMine(x, y) {
+        let forbid = [ y * this.col + x ];
+        forbid.push( ...this.getAround( forbid[0], true ) );
+
         let i = 0,
             num = this.mine,
             len = this.cells.length;
 
-        if( len < num ) throw new Error("Wrong");
+        if( (len - forbid.length) < num ) throw new Error("Wrong");
 
         while( i < num ) {
             let index = rand( len );
+            if( forbid.includes(index) ) continue;
             if( this.cells[index].val === "*" ) continue;
 
             this.cells[ index ].val = "*";
@@ -148,6 +147,15 @@ export default class Arena {
         }
 
         res.forEach( cell => cell.open = true );
+
+        if( res.length > 1 ) {
+            game.canvas.classList.add("shake");
+            game.canvas.addEventListener("animationend", e => {
+                e.target.classList.remove("shake");
+            });
+        }
+
+        return res;
     }
 
     indexToXY( index ) {
@@ -158,5 +166,29 @@ export default class Arena {
 
     XYToIndex( x, y ) {
         return y * this.col + x;
+    }
+
+    click(origin ) {
+        if( origin.val === "*" ) {
+            this.lose();
+        } else if( ! origin.open ) {
+            this.revel( origin );
+        }
+    }
+
+    lose() {
+        alert("Lose");
+    }
+
+    revel( origin ) {
+        let list = [ origin ];
+
+        if( origin.val === 0 ) {
+            list = this.floodFill( origin.x, origin.y );
+        } else {
+            origin.open = true;
+        }
+
+        console.log( list );
     }
 }

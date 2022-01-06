@@ -35,6 +35,14 @@ export default {
             hover: "#f5d1b0",
             light: "#e5c29f",
             dark: "#d7b899",
-        }
+        },
+
+        text: [
+            "",
+            "#1976d2",
+            "#388e3c",
+            "#d32f2f",
+            "#8631a1"
+        ]
     },
 };

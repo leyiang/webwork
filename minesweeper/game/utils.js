@@ -6,4 +6,31 @@ const path = (context, callback) => {
     context.restore();
 };
 
+
+const rect = (context, x, y, fill = "#000", rectSize = game.mode.size, size = game.mode.size ) => {
+    path(context, () => {
+        context.fillStyle = fill;
+        context.rect(x * size, y * size, rectSize, rectSize);
+        context.fill();
+    });
+};
+
+const circle = (c, x, y, fill = "#000", size = game.mode.size) => {
+    path(c, () => {
+        c.fillStyle = fill;
+        c.arc(x * size + size / 2, y * size + size / 2, size / 4, 0, 2 * Math.PI);
+        c.fill();
+    });
+};
+
+const text = (c, val, x, y, fill = "#000", size = game.mode.size) => {
+    path(c, () => {
+        c.font = "20px Arial Black";
+        c.textBaseline = 'middle';
+        c.textAlign = "center";
+        c.fillStyle = fill;
+        c.fillText(val, x * size + size / 2, y * size + size / 2 + 3);
+    });
+};
+
 const rand = max => Math.floor( Math.random() * max );
