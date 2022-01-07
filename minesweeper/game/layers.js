@@ -28,3 +28,7 @@ const createLayer = (context) => {
 export function mineLayer(c) {
     game.arena.cells.forEach( cell => cell.render(c) );
 }
+
+export function ribbonLayer( c, t ) {
+    game.ribbon_list.forEach( ribbon => ribbon.render(c, t) );
+}

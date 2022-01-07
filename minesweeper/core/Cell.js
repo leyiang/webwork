@@ -40,16 +40,23 @@ export default class Cell {
             this.speed += this.acc;
             this.cover.y += this.speed;
             this.cover.x += this.speedX;
-            this.cover.size -= 1;
+            this.cover.size -= .5;
         }
 
         rect(c, this.cover.x, this.cover.y, config.color.grass[style], this.cover.size, this.cover.angle );
 
+        let color = config.color.text[ this.val ] || "black";
+        // text(c, this.val, this.x, this.y, color);
+
+        // if( this.val === "*" ) {
+        //     circle(c, this.x, this.y);
+        // }
+
         if ( this.open) {
             if (this.val === "*") {
-                circle(c, this.x, y);
+                rect(c, this.x, this.y, this?.mine_color?.bg || "#f4c20d" );
+                circle(c, this.x, this.y, this.mine_color.front || "#9f7e08" );
             } else if (this.val !== 0) {
-                let color = config.color.text[ this.val ] || "black";
                 text(c, this.val, this.x, this.y, color);
             }
         } else if (this.flag) {

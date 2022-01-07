@@ -20,7 +20,7 @@ const rect = (context, x, y, fill = "#000", rectSize = game.mode.size, angle = n
 const circle = (c, x, y, fill = "#000", size = game.mode.size) => {
     path(c, () => {
         c.fillStyle = fill;
-        c.arc(x * size + size / 2, y * size + size / 2, size / 4, 0, 2 * Math.PI);
+        c.arc(x * size + size / 2, y * size + size / 2, size / 5, 0, 2 * Math.PI);
         c.fill();
     });
 };
@@ -36,3 +36,7 @@ const text = (c, val, x, y, fill = "#000", size = game.mode.size) => {
 };
 
 const rand = max => Math.floor( Math.random() * max );
+
+const dist = (x1, y1, x2, y2) => {
+    return Math.sqrt( (x2-x1) ** 2 + (y2 - y1) ** 2);
+}

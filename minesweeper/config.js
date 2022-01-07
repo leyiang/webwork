@@ -9,7 +9,7 @@ export default {
         },
 
         middle: {
-            size: 24,
+            size: 40,
             mine: 40,
 
             col: 18,
@@ -43,6 +43,11 @@ export default {
             "#388e3c",
             "#d32f2f",
             "#8631a1"
-        ]
+        ],
+
+        mine: {
+            bg: ["#b648f2", "#008744", "#4885ed", "#48e6f1", "#f4c20d"],
+            front: ["#762f9d", "#00582c", "#2f569a", "#2f969d", "#9f7e08"]
+        }
     },
 };

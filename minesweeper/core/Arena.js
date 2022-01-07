@@ -1,4 +1,6 @@
 import Cell from "./Cell.js";
+import config from "../config.js";
+import Ribbon from "./Ribbon.js";
 
 export default class Arena {
     constructor( { col, row, mine }) {
@@ -9,33 +11,13 @@ export default class Arena {
         this.initialized = false;
 
         this.cells = [];
+        this.mine_list = [];
 
         for(let y = 0; y < this.row; y++) {
             for(let x = 0; x < this.col; x++) {
                 this.cells.push( new Cell(x, y) );
             }
         }
-
-        this.init();
-    }
-
-    init() {
-        game.event.on("click", (x, y) => {
-            // Generate Arena
-            this.initArena( x, y );
-
-            let origin = this.get( x, y );
-            if( ! origin ) return;
-            if( origin.open ) return;
-            if( origin.flag ) return;
-
-            this.click( origin );
-        });
-
-        game.event.on("right", (x, y) => {
-            this.initArena();
-            this.mark( x, y );
-        });
     }
 
     initArena(x, y) {
@@ -63,9 +45,18 @@ export default class Arena {
         while( i < num ) {
             let index = rand( len );
             if( forbid.includes(index) ) continue;
-            if( this.cells[index].val === "*" ) continue;
+            const cell = this.cells[index];
+            if( cell.val === "*" ) continue;
 
-            this.cells[ index ].val = "*";
+            cell.val = "*";
+            let randomColorIndex = rand( config.color.mine.bg.length );
+
+            cell.mine_color = {
+                bg: config.color.mine.bg[ randomColorIndex ],
+                front: config.color.mine.front[ randomColorIndex ],
+            };
+
+            this.mine_list.push( cell );
             i++;
         }
     }
@@ -149,10 +140,7 @@ export default class Arena {
         res.forEach( cell => cell.open = true );
 
         if( res.length > 1 ) {
-            game.canvas.classList.add("shake");
-            game.canvas.addEventListener("animationend", e => {
-                e.target.classList.remove("shake");
-            });
+            game.shake();
         }
 
         return res;
@@ -168,16 +156,45 @@ export default class Arena {
         return y * this.col + x;
     }
 
-    click(origin ) {
+    click(x, y) {
+        let origin = this.get( x, y );
+        if( ! origin ) return;
+        if( origin.open ) return;
+        if( origin.flag ) return;
+
         if( origin.val === "*" ) {
-            this.lose();
+            this.boom( origin );
+            // Game.lose()
         } else if( ! origin.open ) {
             this.reveal( origin );
         }
     }
 
-    lose() {
-        alert("Lose");
+    boom( origin ) {
+        game.shake();
+        game.lose();
+
+        this.mine_list.forEach( mine => {
+            mine.dist = dist( origin.x, origin.y, mine.x, mine.y );
+        });
+
+        const list = this.mine_list.slice();
+        list.sort( (a, b) => a.dist - b.dist );
+
+        list.forEach( (mine, i) => {
+            setTimeout(() => {
+                mine.open = true;
+
+                game.ribbon_list.push(
+                    new Ribbon(mine.x * game.mode.size, mine.y * game.mode.size, mine.mine_color.bg ),
+                    new Ribbon(mine.x * game.mode.size, mine.y * game.mode.size, mine.mine_color.bg ),
+                    new Ribbon(mine.x * game.mode.size, mine.y * game.mode.size, mine.mine_color.bg ),
+                    new Ribbon(mine.x * game.mode.size, mine.y * game.mode.size, mine.mine_color.bg ),
+                    new Ribbon(mine.x * game.mode.size, mine.y * game.mode.size, mine.mine_color.bg ),
+                );
+                console.log( mine );
+            }, i * 300 );
+        });
     }
 
     reveal( origin ) {

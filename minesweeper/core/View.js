@@ -14,12 +14,13 @@ export default class View {
         this.layers = [
             // Layers.createBackgroundLayer( this.c, mode ),
             Layers.mineLayer,
+            Layers.ribbonLayer,
         ];
     }
 
-    render() {
+    render(t) {
         this.c.clearRect( 0, 0, this.canvas.width, this.canvas.height );
 
-        this.layers.forEach( layer => layer( this.c ) );
+        this.layers.forEach( layer => layer( this.c, t) );
     }
 }
