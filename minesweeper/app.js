@@ -4,8 +4,10 @@ import interact from "./game/interact.js";
 import Event from "./core/Event.js";
 import Arena from "./core/Arena.js";
 import assets from "./game/assets.js";
+import Tween from "./core/Tween.js";
 
 window.game = {
+    tween: new Tween,
     event: new Event,
     mode: config.mode.easy,
     canvas: document.getElementById("screen"),

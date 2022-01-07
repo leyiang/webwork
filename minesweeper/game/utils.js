@@ -7,10 +7,12 @@ const path = (context, callback) => {
 };
 
 
-const rect = (context, x, y, fill = "#000", rectSize = game.mode.size, size = game.mode.size ) => {
+const rect = (context, x, y, fill = "#000", rectSize = game.mode.size, angle = null, size = game.mode.size ) => {
     path(context, () => {
         context.fillStyle = fill;
-        context.rect(x * size, y * size, rectSize, rectSize);
+        context.translate( x * size + rectSize / 2, y * size + rectSize / 2 );
+        context.rotate( angle );
+        context.rect(-rectSize/2, -rectSize / 2, rectSize, rectSize);
         context.fill();
     });
 };

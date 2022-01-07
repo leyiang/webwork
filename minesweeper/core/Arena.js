@@ -172,7 +172,7 @@ export default class Arena {
         if( origin.val === "*" ) {
             this.lose();
         } else if( ! origin.open ) {
-            this.revel( origin );
+            this.reveal( origin );
         }
     }
 
@@ -180,7 +180,7 @@ export default class Arena {
         alert("Lose");
     }
 
-    revel( origin ) {
+    reveal( origin ) {
         let list = [ origin ];
 
         if( origin.val === 0 ) {
@@ -189,6 +189,8 @@ export default class Arena {
             origin.open = true;
         }
 
-        console.log( list );
+        list.forEach( cell => {
+            cell.reveal();
+        });
     }
 }

@@ -9,10 +9,16 @@ export default class Cell {
         this.open = false;
         this.flag = false;
 
+        this.acc = .01;
+        this.diff = .1;
+        this.speed = -.15;
+        this.speedX = Math.random() % .05
+
         this.cover = {
             x: this.x,
             y: this.y,
             size: game.mode.size,
+            angle: 0,
         };
     }
 
@@ -26,11 +32,18 @@ export default class Cell {
             rect(c, this.x, this.y, config.color.ground[style]);
         }
 
-        if( this.open && this.cover.size > 0) {
+        if( this.open && this.cover.size > 0 ) {
+            if( ! this.cover.angle ) {
+                this.cover.angle = Math.random() * (Math.random() < .5 ? 1 : -1) * 3;
+            }
+
+            this.speed += this.acc;
+            this.cover.y += this.speed;
+            this.cover.x += this.speedX;
             this.cover.size -= 1;
         }
 
-        rect(c, this.cover.x, this.cover.y, config.color.grass[style], this.cover.size);
+        rect(c, this.cover.x, this.cover.y, config.color.grass[style], this.cover.size, this.cover.angle );
 
         if ( this.open) {
             if (this.val === "*") {
@@ -45,6 +58,17 @@ export default class Cell {
 
             c.drawImage(game.images.flag_icon, this.x * size + size / 2 - flagSize / 2, this.y * size + size / 2 - flagSize / 2, flagSize, flagSize);
         }
+    }
 
+    reveal() {
+        // game.tween.add({
+        //     duration: 1000,
+        //     el: this.cover,
+        //     to: {
+        //         size: 0,
+        //         angle: Math.random() * (Math.random() < .5 ? 1 : -1) * 3,
+        //         y: this.y + .5
+        //     },
+        // });
     }
 }
