@@ -17,7 +17,7 @@ export default {
         },
 
         hard: {
-            size: 24,
+            size: 34,
             mine: 99,
 
             col: 24,

@@ -12,7 +12,7 @@ export default class Game {
     init() {
         this.tween = new Tween;
         this.event = new Event;
-        this.mode = config.mode.middle;
+        this.mode = config.mode.hard;
         this.canvas = document.getElementById("screen");
         this.arena = new Arena(this.mode);
 
