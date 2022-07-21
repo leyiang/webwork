@@ -2,7 +2,7 @@ const fs = require("fs");
 
 function getComponent( name ) {
     return `
-        <a href="/${name}" class="project-item">
+        <a href="./${name}" class="project-item">
             <span>${ name }</span>
         </a>
     `;
