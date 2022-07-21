@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>animate gradient</title>
+
+    <style>
+        :root {
+            --color-a: #FFF;
+            --color-b: #000;
+        }
+        html, body {
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            background: linear-gradient(45deg, var(--color-a), var(--color-b));
+            transition: 1s --color-a, 1s --color-b;
+            animation: bg 10s infinite linear;
+        }
+
+        @keyframes bg {
+            30% {
+                --color-a: pink;
+                --color-b: red;
+            }
+
+            60% {
+                --color-a: skyblue;
+                --color-b: green;
+            }
+
+            90 %{
+                --color-a: purple;
+                --color-b: orange;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        CSS.registerProperty({
+            name: "--color-a",
+            syntax: "<color>",
+            inherits: false,
+            initialValue: "#FFF"
+        });
+
+        CSS.registerProperty({
+            name: "--color-b",
+            syntax: "<color>",
+            inherits: false,
+            initialValue: "#000"
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Magnet Mouse</title>
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        .magnet {
+            font-size: 1rem;
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            border: none;
+            background-color: #1577ee;
+            color: #FFF;
+            transition: all ease .5s;
+            border-radius: 10rem;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .list {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 0;
+        }
+
+        .magnet-cursor {
+            background-color: #222;
+            border-radius: 50%;
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            transition: all .5s, transform ease-out .15s;
+            z-index: 1;
+        }
+
+        .magnet-cursor:nth-of-type(2) {
+            transition: all .5s, transform ease-out .2s;
+        }
+
+        .magnet-cursor:nth-of-type(3) {
+            transition: all .5s, transform ease-out .25s;
+        }
+
+        .magnet-cursor:nth-of-type(4) {
+            transition: all .5s, transform ease-out .3s;
+        }
+
+        .magnet-cursor:nth-of-type(5) {
+            transition: all .5s, transform ease-out .35s;
+        }
+
+        .magnet-cursor.active {
+            transition: all .5s, transform ease-out .075s;
+            box-sizing: border-box;
+            border: 4px solid rgba(0, 0, 0, 1);
+            background-color: transparent;
+        }
+
+        .cursor {
+            pointer-events: none;
+            width: 10px;
+            height: 10px;
+            background-color: #000;
+            border-radius: 50%;
+            opacity: 0;
+            transition: all .3s, transform 0s;
+            will-change: transform, opacity;
+
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cursor.visible {
+            opacity: 1;
+        }
+
+        .cursor.test {
+            background-color: red;
+        }
+        .cursor.bigger {
+            width: 60px;
+            height: 60px;
+        }
+        .cursor.text {
+            width: 100px;
+            height: 100px;
+            color: #FFF;
+
+            text-align: center;
+            /*transition: opacity ;*/
+        }
+
+        .cursor .cursor-text {
+            transform: scale(0);
+            transition: all .1s;
+        }
+
+        .cursor.text .cursor-text {
+            transform: scale(1);
+        }
+
+        .cursor.exclusion {
+            mix-blend-mode: exclusion;
+            background-color: #FFF;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+
+    <script src="gsap.js"></script>
+    <script src="Vec.js"></script>
+    <script src="Magnet.js"></script>
+    <script src="Cursor.js"></script>
+</head>
+<body>
+
+    <div class="list">
+        <button class="magnet" data-cursor="test">Change Color</button>
+        <button class="magnet" data-cursor="bigger">Change Size</button>
+
+        <button class="magnet" data-text="Click!">Set Text</button>
+
+        <div class="card" style="width: 300px; height: 400px; padding: 1rem; background-color: pink;"
+             data-stick="#sticker" data-cursor="exclusion"
+        >
+            <button class="magnet" id="sticker">Magnet Mouse</button>
+        </div>
+
+        <div class="card" style="width: 300px; height: 400px; padding: 1rem; background-color: pink;"
+             data-cursor="exclusion" data-magnet
+        >
+            Magnet
+        </div>
+    </div>
+
+<!--    <div class="magnet-cursor"></div>-->
+<!--    <div class="magnet-cursor"></div>-->
+
+    <script>
+        const cursor = new Cursor();
+
+        document.querySelectorAll("[data-magnet]").forEach( el => {
+            new Magnet( el );
+        });
+    </script>
+
+</body>
+</html>

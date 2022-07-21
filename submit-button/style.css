@@ -1,0 +1,62 @@
+:root {
+    --squish-time: 500ms;
+    --expand-time: 500ms;
+    --back-time: 500ms;
+    --stroke-time: 500ms;
+
+    --radius: 10px;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+button, [role="button"] {
+    cursor: pointer;
+    user-select: none;
+}
+
+.hide-form-el {
+    display: none;
+}
+
+.btn {
+    background-color: rgb(43, 45, 47);
+    color: #71DFBE;
+    border-radius: .25rem;
+    border: none;
+    position: relative;
+    width: 160px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font: 700 1.25rem Arial;
+}
+
+.submit-button svg {
+    position: absolute;
+}
+
+.btn svg path {
+    stroke: #FFF;
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    width: 30px;
+    stroke-dasharray: 42;
+    stroke-dashoffset: 42;
+}
+
+.submit-button .progress {
+    position: absolute;
+    inset: 0;
+    width: 0px;
+    background-color: #AAA;
+    border-radius: var(--radius);
+}
