@@ -7,7 +7,7 @@ function loadImage( src ) {
 }
 
 const list = [
-    loadImage("../assets/flag_icon.png"),
+    loadImage("./assets/flag_icon.png"),
 ];
 
 export default function() {
