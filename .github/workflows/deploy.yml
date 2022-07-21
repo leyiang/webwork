@@ -1,0 +1,15 @@
+name: Deployment
+on: 
+  push: 
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      -name: Build Page
+       run: node compile.js
