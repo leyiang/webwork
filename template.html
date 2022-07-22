@@ -4,22 +4,54 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Webwork Preview - Yiang</title>
 
     <style>
-      .project-item {
-        display: block;
-        width: 200px;
-        height: 200px;
-        border: 1px solid #000;
-        border-radius: 5px;
-      }
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #FAFAFA;
+        }
+
+        .project-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            width: 80%;
+            margin: 0 auto;
+            margin-top: 5rem;
+        }
+
+        .project-item {
+            background: #FFF;
+            height: 200px;
+            border: 2px solid #EEE;
+            border-radius: 5px;
+
+            text-decoration: none;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #666;
+        }
+
+        .project-item:hover {
+            border: 2px solid #1397ff;
+            box-shadow: 0 0 0 4px rgba(19, 153, 255, 0.3);
+        }
     </style>
   </head>
   <body>
 
-    <div class="project-container">
-      <!--project-->
+    <div id="app">
+
+        <div class="project-container">
+        <!--project-->
+        </div>
+        
     </div>
 
   </body>
