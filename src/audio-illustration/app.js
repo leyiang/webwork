@@ -22,39 +22,56 @@ playBTN.addEventListener("click", () => {
     audio.source.connect( audio.analyzer );
     audio.analyzer.connect( audio.context.destination );
 
-    audio.analyzer.fftSize = 128;
+    audio.analyzer.fftSize = 512;
     const bufferLength = audio.analyzer.frequencyBinCount;
     audio.data = new Uint8Array(bufferLength);
 
     audio.stream.play();
 });
 
+const radius = 200;
+
 function animate() {
     if( audio.analyzer ) {
         audio.analyzer.getByteFrequencyData( audio.data );
     }
 
-    const color = c.createLinearGradient(0, 0, 0, 300);
-    color.addColorStop(1, '#0f00f0');
-color.addColorStop(0.5, '#ff0ff0');
-color.addColorStop(0, '#f00f00');
+//     const color = c.createLinearGradient(0, 0, 0, 300);
+//     color.addColorStop(1, '#0f00f0');
+// color.addColorStop(0.5, '#ff0ff0');
+// color.addColorStop(0, '#f00f00');
 
     c.fillStyle = "#000";
     c.fillRect(0, 0, canvas.width, canvas.height);
 
-    let gap = 1;
+    const length = 90;
     if( audio.data ) {
-        let width = canvas.width / audio.data.length;
-        c.fillStyle = color;
-        // c.fillStyle = "#FFF";
+        let width = canvas.width / length;
+        // c.fillStyle = color;
+        c.fillStyle = "#FFF";
 
-        for(let i = 0; i < audio.data.length; i++) {
-            const val = audio.data[ i ];
-            c.fillRect(i * width + (i-1) * gap, 400 - val, width, val);
-        }
+        const step = Math.round(audio.data.length / length)
+        console.log( step );
+        isolateContext(c, () => {
+            c.translate(400, 400);
+            for(let i = 10; i < length + 10; i++) {
+                const val = audio.data[ i ];
+                const height = (val + 10) * 150 / 256;
+                c.rotate(2 * Math.PI / length);
+                c.fillRect(-width / 2, - radius - height, width, height);
+            }
+        });
     }
 
     requestAnimationFrame( animate );
 }
 
 animate();
+
+function isolateContext(context, isolateContextCallback) {
+    context.save();
+    context.beginPath();
+    isolateContextCallback( context );
+    context.closePath();
+    context.restore();
+}
