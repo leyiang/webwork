@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Theme</title>
+    
+    <style>
+        #app {
+            width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #app {
+            --link-color: blue;
+            --color: #000;
+            --bg-color: #EEE;
+
+            color: var(--color);
+            background-color: var(--bg-color);
+            padding: 1rem;;
+            border-radius: 5px;
+        }
+
+        #app a {
+            color: var(--link-color);
+        }
+
+        
+        #light:target ~ #app .theme-selector [href="#light"],
+        #dark:target ~ #app .theme-selector [href="#dark"],
+        #red:target ~ #app .theme-selector [href="#red"] {
+            background: pink;
+        }
+
+        /**
+        * :local-link is perfect for the job
+        * but sadly, no browser supports it yet
+        **/
+        .theme-selector :local-link {
+            background: pink;
+        }
+
+        #dark:target ~ #app {
+            --color: #FFF;
+            --bg-color: #000;
+            --link-color: #0fa3e6;  
+        }
+
+        #red:target ~ #app {
+            --color: #000;
+            --bg-color: #d95252;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <span class="theme-type" id="dark"></span>
+    <span class="theme-type" id="light"></span>
+    <span class="theme-type" id="red"></span>
+
+    <div id="app">
+        <header class="flex">
+            <h1>Welcome to my app</h1>
+
+            <div class="theme-selector">
+                <a href="#light">Light</a>
+                <a href="#dark">Dark</a>
+                <a href="#red">Red</a>
+            </div>
+            <!-- <select id="theme-selector">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="red">Red</option>
+            </select> -->
+        </header>
+
+        <main>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, et quo. Vero, consequatur, id cumque amet suscipit unde cum ut alias omnis maiores impedit similique sunt iure accusantium vitae. Expedita.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, et quo. Vero, consequatur, id cumque amet suscipit unde cum ut alias omnis maiores impedit similique sunt iure accusantium vitae. Expedita.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, et quo. Vero, consequatur, id cumque amet suscipit unde cum ut alias omnis maiores impedit similique sunt iure accusantium vitae. Expedita.</p>
+        </main>
+    </div>
+
+</body>
+</html>
