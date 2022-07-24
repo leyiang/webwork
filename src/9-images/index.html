@@ -29,7 +29,7 @@
             grid-template-rows: repeat(3, 1fr);
 
             gap: var(--gap);
-            counter-reset: photo-item;
+            counter-reset: photo-item -9;
             position: relative;
         }
 
@@ -38,6 +38,7 @@
             border-radius: 5px;
             overflow: hidden;
             background: #EEE;
+            counter-increment: photo-item;
         }
 
         .photo-item img {
@@ -48,7 +49,6 @@
         }
 
         .photos div:nth-of-type(9)~.photo-item {
-            counter-increment: photo-item;
             visibility: hidden;
             position: absolute;
             /* display: none; */
