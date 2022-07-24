@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9 Images</title>
+
+    <style>
+        body {
+            margin: 0;
+        }
+
+        article {
+            border: 1px solid #DDD;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+            width: 400px;
+            margin: 100px auto;
+            padding: 1rem;
+        }
+
+        .photos {
+            --gap: 2px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+
+            gap: var(--gap);
+            counter-reset: photo-item;
+            position: relative;
+        }
+
+        .photo-item {
+            aspect-ratio: 1 / 1;
+            border-radius: 5px;
+            overflow: hidden;
+            background: #EEE;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .photos div:nth-of-type(9)~.photo-item {
+            counter-increment: photo-item;
+            visibility: hidden;
+            position: absolute;
+            /* display: none; */
+        }
+
+        .photos div:nth-of-type(9)~div:last-of-type {
+            visibility: visible;
+            bottom: 0;
+            right: 0;
+            width: calc(calc(100% - calc(2 * var(--gap))) / 3);
+            aspect-ratio: 1 / 1;
+        }
+
+        .photos div:nth-of-type(9)~div:last-of-type::after {
+            content: "+ " counter(photo-item);
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFF;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <article>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Blanditiis fugit magni ad cum beatae vero deleniti,
+            sequi repellat qui saepe dolore, perferendis illum, dolorem quisquam repellendus. Consequuntur ab architecto
+            amet?</p>
+
+        <div class="photos">
+            <div class="photo-item">
+                <img src="https://i.pinimg.com/236x/26/c7/35/26c7355fe46f62d84579857c6f8c4ea5.jpg" alt="image">
+            </div>
+            <div class="photo-item">
+                <img src="https://i.pinimg.com/236x/b6/2a/6c/b62a6cd76abc74602ef54c1697c740f1.jpg" alt="image">
+            </div>
+            <div class="photo-item">
+                <img src="https://i.pinimg.com/236x/f0/01/dd/f001ddd34dfb99712edbccf9d2fdf91f.jpg" alt="image">
+            </div>
+            <div class="photo-item">
+                <img src="https://i.pinimg.com/236x/6b/9e/63/6b9e6397f86df4ee4658a1267cd5a1d8.jpg" alt="image">
+            </div>
+            <div class="photo-item">
+                <img src="https://i.pinimg.com/236x/49/f1/ea/49f1ea4c0705bf45ce2e4e3df1928309.jpg" alt="image">
+            </div>
+            <div class="photo-item">
+                <img src="https://i.pinimg.com/236x/87/a8/a3/87a8a378128df67cc09df6eda20be10f.jpg" alt="image">
+            </div>
+            <div class="photo-item">
+                <img src="https://i.pinimg.com/236x/f2/1f/c5/f21fc551374437ea00d9764a55506bcf.jpg" alt="image">
+            </div>
+            <div class="photo-item">
+                <img src="https://i.pinimg.com/236x/c6/e1/4c/c6e14cde95e6ecf1c0fd35daae0e1f3d.jpg" alt="image">
+            </div>
+            <div class="photo-item">
+                <img src="https://i.pinimg.com/236x/08/c5/fb/08c5fb6cd7734e40c545d8ae48d69551.jpg" alt="image">
+            </div>
+            <div class="photo-item">
+                <img src="https://i.pinimg.com/236x/2b/91/4e/2b914e6244444cd3c25b614173c70302.jpg" alt="image">
+            </div>
+            <div class="photo-item">
+                <img src="https://i.pinimg.com/236x/e0/eb/02/e0eb029e7d6a1dfd5b32a64c22aea806.jpg" alt="image">
+            </div>
+            <div class="photo-item">
+                <img src="https://i.pinimg.com/236x/66/0b/eb/660bebea3003c4ae0d8b7589e8319ad7.jpg" alt="image">
+            </div>
+            <div class="photo-item">
+                <img src="https://i.pinimg.com/236x/17/61/cb/1761cbcffc03a7c887dc37bd58c58690.jpg" alt="image">
+            </div>
+            <div class="photo-item">
+                <img src="https://i.pinimg.com/236x/fa/ec/c8/faecc8ee56a06da333ca0d837c5e7175.jpg" alt="image">
+            </div>
+            <div class="photo-item">
+                <img src="https://i.pinimg.com/236x/63/d8/48/63d8485656b879ff8c2850e87aad1d2a.jpg" alt="image">
+            </div>
+        </div>
+    </article>
+
+</body>
+
+</html>
