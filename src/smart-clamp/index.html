@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Smart Clamp</title>
+
+    <style>
+        #app {
+            resize: horizontal;
+            width: 450px;
+            overflow: hidden;
+            margin: 100px auto;
+            border: 1px solid #000;
+            padding: 2rem;
+        }
+
+        article {
+            /*border: 1px solid #DDD;*/
+            /*outline: 1px solid #DDD;*/
+            border: 1rem solid transparent;
+            border-radius: 5px;
+            line-height: 1.5;
+            margin: 2rem 0;
+            box-shadow: 0 0 0 1px #DDD,  0 5px 5px rgba(0 0 0 / 10%);
+            height: 96px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        article h1 {
+            margin-top: 0;
+            margin-bottom: 3px;
+            font-size: 22px;
+
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        article p {
+            margin: 0;
+            font-size: 18px;
+            max-height: 3em;
+            overflow: hidden;
+            flex: 1;
+            margin-top: auto;
+            text-align: justify;
+        }
+
+        article p::before {
+            content: "...";
+            float: right;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            shape-outside: inset(calc(100% - 1.5em) 0 0);
+        }
+
+        article p::after {
+            content: '';
+            width: 999vw;
+            height: 999vh;
+            background: #FFF;
+            position: absolute;
+            box-shadow: -2em 2em #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <span>Only shows three lines of content</span>
+        <article tabindex="1">
+            <h1>This is a title that suppose to be 1 lines</h1>
+            <p>Lorem ipsum dolor assumenda dicta eius esse excepturi ipsa iste iusto laboriosam laborum magnam minus molestias odit pariatur repudiandae sit, tenetur.</p>
+        </article>
+
+        <article>
+            <h1>TThis is a super long lonbe 2 lineshis is a super long long long long title that suppose to be 2 lines</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium animi aperiam assumenda beatae dicta eius esse excepturi ipsa iste iusto laboriosam laborum magnam minus molestias odit pariatur repudiandae sit, tenetur.</p>
+        </article>
+    </div>
+</body>
+</html>
