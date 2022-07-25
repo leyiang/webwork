@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Random Firework</title>
+
+    <style>
+        body {
+            background: #000;
+        }
+
+        .firework {
+            position: fixed;
+            width: 150px;
+            height: 150px;
+            background: url("./firework_sprites.png") no-repeat;
+            background-size: auto 150px;
+            animation: firework 1s steps(24) infinite, random 4s steps(1) infinite;
+            background: pink;
+            -webkit-mask-image: url("./firework_sprites.png");
+            -webkit-mask-size: auto 150px;
+        }
+
+        @keyframes firework {
+            to {
+                -webkit-mask-position: 100%;
+            }
+        }
+
+        @keyframes random {
+            25% {
+                transform: translate(200%, 120%) scale(1);
+                background: #FFF;
+            }
+
+            50% {
+                transform: translate(80%, 20%) scale(1.2);
+                background: yellow;
+            }
+
+            75% {
+                transform: translate(200%, 80%) scale(.8);
+                background: green;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="firework" style="animation-delay: 0s; top: 0%; left: 50%"></div>
+    <div class="firework" style="animation-delay: -1s; top: 30%; left: 20%"></div>
+    <div class="firework" style="animation-delay: -2.4s; top: 10%; left: 30%"></div>
+    <div class="firework" style="animation-delay: -1.3s; top: 40%; left: 20%"></div>
+</body>
+</html>
