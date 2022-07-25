@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Viewmore</title>
+
+    <style>
+        .item {
+            width: 400px;
+            padding: 1rem;
+            margin: 100px auto;
+            border-radius: 5px;
+            border: 1px solid #DDD;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+            overflow: hidden;
+            resize: horizontal;
+            background: #FFF;
+            position: relative;
+        }
+
+        .item p, .item p::before {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: justify;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            line-height: 1.5;
+            margin: 0;
+            background: inherit;
+        }
+
+        .item p::before {
+            content: attr(data-content);
+            position: absolute;
+            left: 16px;
+            right: 16px;
+        }
+
+        .item p::after {
+            content: '';
+            /* position: absolute; */
+            display: block;
+            margin-top: -1.5em;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="item">
+        <p data-content="Lorem ipsum dolor sit amet consectetur sdk lfj askd kas jfl asdjfl">Lorem ipsum dolor sit amet consectetur sdk lfj askd kas jfl asdjfl</p>
+        <a href="#">Viewmore</a>
+    </div>
+
+    <div class="item">
+        <p data-content="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque, expedita commodi debitis, totam quos animi eius tenetur inventore quod tempore perferendis sit laboriosam officiis veritatis voluptates autem fugiat saepe quasi.">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque, expedita commodi debitis, totam quos animi eius tenetur inventore quod tempore perferendis sit laboriosam officiis veritatis voluptates autem fugiat saepe quasi.</p>
+        <a href="#">Viewmore</a>
+    </div>
+</body>
+</html>
