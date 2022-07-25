@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dialog Modal</title>
+
+    <style>
+
+        dialog {
+            border: none;
+            border-radius: 5px;
+            min-width: 400px;
+            padding: 0;
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        dialog header {
+            border-bottom: 1px solid #EEE;
+            padding: 1rem;
+        }
+
+        dialog footer {
+            border-top: 1px solid #EEE;
+            padding: 1rem;
+        }
+
+        dialog main {
+            padding: 1rem;
+        }
+
+        h1, h2 {
+            margin: 0;
+        }
+    </style>
+
+    <script src="https://unpkg.com/vue@3.2.37/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <button @click="toggle">Setting</button>
+
+        <a-modal
+            :show="show"
+            @close="show = false"
+        >
+            <template #header>
+                <h2>Main Modal</h2>
+            </template>
+
+            <template #footer>
+                <button
+                    style="margin-left: 1rem;"
+                    @click="subModal = true"
+                >Show SubModal</button>
+            </template>
+
+            <span>This is just an example to show that how &lt;dialog&gt; can be used</span>
+        </a-modal>
+
+        <a-modal
+            :show="subModal"
+            @close="subModal = false"
+        ></a-modal>
+    </div>
+
+
+    <script src="./app.js" type="module"></script>
+</body>
+</html>
