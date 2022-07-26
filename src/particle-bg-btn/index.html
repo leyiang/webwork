@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Particle Button</title>
+
+    <style>
+        #app {
+            margin: 200px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn {
+            --color: #ff598c;
+
+            border: none;
+            padding: 16px 32px;
+            font-size: 16px;
+            border-radius: 5px;
+            color: #FFF;
+            cursor: pointer;
+            position: relative;
+
+            background: var(--color);
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            inset: -2em;
+
+            pointer-events: none;
+            background-color: transparent;
+            background-repeat: no-repeat;
+            background-image:
+                radial-gradient(circle, var(--color) 20%, transparent 0),
+                radial-gradient(circle, var(--color) 20%, transparent 0),
+                radial-gradient(circle, var(--color) 20%, transparent 0),
+                radial-gradient(circle, var(--color) 20%, transparent 0),
+                radial-gradient(circle, var(--color) 20%, transparent 0),
+                radial-gradient(circle, var(--color) 20%, transparent 0),
+                radial-gradient(circle, var(--color) 20%, transparent 0),
+                radial-gradient(circle, var(--color) 20%, transparent 0),
+                radial-gradient(circle, var(--color) 20%, transparent 0)
+            ;
+
+
+            background-position:
+                    0% 5%,
+                    -5% 51%,
+                    36% 92%,
+                    35% 11%,
+                    95% 8%,
+                    71% 83%,
+                    102% 96%,
+                    5% 92%,
+                    59% 19%
+        ;
+            transition: background-size .5s, background-position .5s;
+            background-size: 0 0;
+        }
+
+        .btn:active::before {
+            transition: 0s;
+
+            background-position:
+                    19% 34%,
+                    15% 53%,
+                    35% 69%,
+                    37% 34%,
+                    81% 36%,
+                    67% 65%,
+                    86% 63%,
+                    17% 66%,
+                    55% 36%
+            ;
+
+            background-size:
+                    25% 25%,
+                    20% 20%,
+                    20% 20%,
+                    20% 20%,
+                    16% 16%,
+                    20% 20%,
+                    30% 30%,
+                    28% 28%,
+                    25% 26%
+            ;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <button class="btn">Click Me!</button>
+    </div>
+
+</body>
+</html>
