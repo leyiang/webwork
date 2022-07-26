@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS Clock</title>
+
+    <style>
+        :root {
+            --rhour: 0;
+            --rmin: 0;
+            --rsec: 0;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: grid;
+            place-items: center;
+        }
+
+        .divider::after {
+            content: ':';
+        }
+
+        .clock {
+            font-size: 10rem;
+            font-weight: 700;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        @property --hour {
+            syntax: "<integer>";
+            initial-value: 0;
+            inherits: false;
+        }
+
+        @property --min {
+            syntax: "<integer>";
+            initial-value: 0;
+            inherits: false;
+        }
+
+        @property --sec {
+            syntax: "<integer>";
+            initial-value: 0;
+            inherits: false;
+        }
+
+        .clock {
+            --sec-dur-i: 1s;
+            --sec-dur: calc( 60 * var(--sec-dur-i) );
+            --min-dur: calc( 60 * var(--sec-dur) );
+            --hour-dur: calc( 24 * var(--min-dur) );
+        }
+
+        .min::after {
+            counter-reset: min var(--min);
+            animation: add-min var(--min-dur) steps(60) infinite;
+            content: counter(min, decimal-leading-zero);
+            animation-delay: calc(-60s * var(--rmin));
+        }
+
+        .sec::after {
+            counter-reset: sec var(--sec);
+            animation: add-sec var(--sec-dur) steps(60) infinite;
+            content: counter(sec, decimal-leading-zero);
+            animation-delay: calc( -1s * var(--rsec) );
+        }
+
+        .hour::after {
+            counter-reset: hour var(--hour);
+            animation: add-hour var(--hour-dur) steps(24) infinite;
+            content: counter(hour, decimal-leading-zero);
+            animation-delay: calc( -60s * 60 * var(--rhour));
+        }
+
+        @keyframes add-min {
+            from {
+                --min: 0;
+            }
+
+            to {
+                --min: 60;
+            }
+        }
+
+        @keyframes add-hour {
+            from {
+                --hour: 0;
+            }
+
+            to {
+                --hour: 24;
+            }
+        }
+
+        @keyframes add-sec {
+            from {
+                --sec: 0;
+            }
+
+            to {
+                --sec: 60;
+            }
+        }
+
+        .clock  {
+            display: flex;
+            align-items: center;
+        }
+
+        .hour, .min, .sec {
+            width: 177.97px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="clock">
+        <span class="hour"></span>
+        <span class="divider"></span>
+        <span class="min"></span>
+        <span class="divider"></span>
+        <span class="sec"></span>
+    </div>
+
+    <script>
+        const date = new Date();
+        const hour = date.getHours();
+        const min = date.getMinutes();
+        const sec = date.getSeconds();
+
+        document.body.style.setProperty("--rsec", sec );
+        document.body.style.setProperty("--rmin", min );
+        document.body.style.setProperty("--rhour", hour );
+    </script>
+
+</body>
+</html>

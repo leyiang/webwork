@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Step Animation</title>
+
+    <style>
+        section {
+            width: 800px;
+            margin: 200px auto;
+            position: relative;
+        }
+
+        .text {
+            width: 100%;
+            height: auto;
+        }
+
+        .icon {
+            --size: 40px;
+
+            width: var(--size);
+            height: var(--size);
+            background: pink;
+
+            position: absolute;
+            top: -22px;
+            right: 23.2%;
+
+            background: url("./icon-list.svg") no-repeat;
+            background-size: auto 100%;
+
+            animation: icon 1s steps(10) infinite forwards;
+            animation-play-state: paused;
+            animation-delay: -.7s;
+        }
+
+        section:hover .icon {
+            animation-play-state: running;
+        }
+
+        @keyframes icon {
+            to {
+                background-position: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section>
+        <img src="./text.svg" alt="text" class="text">
+        <div class="icon"></div>
+    </section>
+
+</body>
+</html>
