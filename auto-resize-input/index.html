@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Auto Resize Input</title>
+
+    <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+        }
+
+        body {
+            display: grid;
+            place-items: center;
+        }
+
+        .auto-resize-input {
+            font-size: 2rem;
+            border: none;
+            outline: 0;
+
+            width: 100%;
+            text-align: center;
+            text-decoration: underline;
+            text-underline-offset: 10px;
+            line-height: 2;
+
+            --underline-color: currentColor;
+
+            text-decoration-thickness: 4px;
+            text-decoration-color: var(--underline-color);
+
+            background: linear-gradient(var(--underline-color), var(--underline-color)) center bottom 6px no-repeat;
+            background-size: 240px 4px;
+        }
+
+        .auto-resize-input:focus {
+            --underline-color: dodgerblue;
+        }
+
+    </style>
+</head>
+<body>
+
+    <input type="text" class="auto-resize-input" placeholder="Input something">
+
+</body>
+</html>
