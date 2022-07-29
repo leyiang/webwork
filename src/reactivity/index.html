@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Reactivity</title>
+
+    <style>
+        #app {
+            margin: 100px auto;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <span></span>
+        <button>Click to increase</button>
+    </div>
+
+    <script type="module">
+        import { ref, watchEffect } from "./reactivity.js";
+
+        const app = document.querySelector("#app");
+        const span = app.querySelector("span");
+        const button = app.querySelector("button");
+
+        const data = ref(0);
+
+        watchEffect(() => {
+            span.innerText = `Clicked ${ data.value } times`;
+        });
+
+        button.addEventListener("click", function() {
+            data.value ++;
+        });
+    </script>
+</body>
+</html>
