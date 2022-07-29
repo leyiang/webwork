@@ -43,6 +43,21 @@ export function ref(value) {
     return refObject;
 }
 
+export function computed(update) {
+    const refObject = {
+        get value() {
+            track(refObject, "value")
+            return update()
+        },
+
+        set value( newVal ) {
+            console.warn("not supported");
+        }
+    }
+
+    return refObject;
+}
+
 export function watchEffect(update) {
     const effect = () => {
         activeEffect = update;

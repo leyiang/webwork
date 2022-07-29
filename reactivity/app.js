@@ -1,12 +1,20 @@
-import { ref, watchEffect } from "./reactivity.js";
+import { computed, ref, watchEffect } from "./reactivity.js";
 
-const a = ref(1);
-const b = ref(5);
+const x = ref(0);
+const y = ref(0);
+const color = ref("pink");
+
+const style = computed(() => ({
+    transform: `translate(${x.value}px, ${y.value}px)`,
+    color: color.value,
+}));
 
 watchEffect(() => {
-    console.log( a.value * b.value );
+    console.log( style.value );
 });
 
 setTimeout(() => {
-    a.value = 99;
+    x.value = 25;
+    y.value = 99;
+    color.value = "skyblue";
 });
