@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Corner Badge</title>
+    <style>
+        #app {
+            width: 800px;
+            margin: 100px auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .book {
+            width: 200px;
+            position: relative;
+
+            --badge-text-color: #FFF;
+            resize: horizontal;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .tag {
+            position: absolute;
+            top: 0;
+            left: -5px;
+            border-radius: 5px;
+            border-bottom-left-radius: 0;
+
+            color: var(--badge-text-color);
+            background: linear-gradient(to right bottom, rgba(255, 255, 255, .4), transparent) var(--badge-color, orange);
+            background-blend-mode: soft-light;
+
+            padding: 4px 8px;
+        }
+
+        .tag::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            filter: brightness(.85);
+            background-color: inherit;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
+            z-index: -1;
+        }
+
+        .tag.invalid {
+            --badge-color: darkorange;
+        }
+
+        .tag:is(.rejected, .locked) {
+            --badge-color: #f90e4f;
+        }
+
+        .tag.writing {
+            --badge-color: dodgerblue;
+        }
+
+        .tag.paused {
+            --badge-color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <div class="book">
+            <span class="tag invalid">未达到审核标准</span>
+            <img src="./img.png" alt="Cover Image">
+        </div>
+
+        <div class="book">
+            <span class="tag">审核中</span>
+            <img src="./img.png" alt="Cover Image">
+        </div>
+
+        <div class="book">
+            <span class="tag rejected">审核未通过</span>
+            <img src="./img.png" alt="Cover Image">
+        </div>
+
+        <div class="book">
+            <span class="tag writing">连载中</span>
+            <img src="./img.png" alt="Cover Image">
+        </div>
+
+        <div class="book">
+            <span class="tag locked">锁定/屏弊</span>
+            <img src="./img.png" alt="Cover Image">
+        </div>
+
+        <div class="book">
+            <span class="tag paused">暂停更新</span>
+            <img src="./img.png" alt="Cover Image">
+        </div>
+    </div>
+
+</body>
+</html>
