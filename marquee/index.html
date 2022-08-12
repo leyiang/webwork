@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Marquee</title>
+    <link rel="stylesheet" href="./css/dashicons.min.css">
+
+    <style>
+        .flex {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .sponsor-item {
+            font-size: 8rem;
+            width: 500px;
+            height: 240px;
+            display: flex;
+            border-radius: 5px;
+            align-items: center;
+            justify-content: center;
+            background: #EEE;
+        }
+
+        .gap {
+            gap: 1rem;
+        }
+
+        .marquee {
+            --dur: 30s;
+            --gap: 1rem;
+            position: relative;
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+            gap: var(--gap);
+            /*transform: skew(-3deg);*/
+        }
+
+        .marquee.reverse .marquee-group {
+            animation-direction: reverse;
+        }
+
+        .marquee.delay .marquee-group {
+            animation-delay: -5s;
+        }
+
+        .marquee-group {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-around;
+            gap: var(--gap);
+            min-width: 100%;
+            animation: scroll var(--dur) infinite linear;
+        }
+        
+        @keyframes scroll {
+            from {
+                transform: translate(0);
+            }
+            to{
+                transform: translate( calc(-100% - var(--gap) ));
+            }
+        }
+
+        body {
+            font-family: Courier New,serif;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="marquee">
+        <div class="marquee-group flex">
+            <div class="sponsor-item dashicons dashicons-twitch"></div>
+            <div class="sponsor-item dashicons dashicons-twitter"></div>
+            <div class="sponsor-item dashicons dashicons-amazon"></div>
+            <div class="sponsor-item dashicons dashicons-google"></div>
+            <div class="sponsor-item dashicons dashicons-facebook"></div>
+            <div class="sponsor-item dashicons dashicons-instagram"></div>
+            <div class="sponsor-item dashicons dashicons-youtube"></div>
+        </div>
+
+        <div class="marquee-group flex gap" aria-hidden="true">
+            <div class="sponsor-item dashicons dashicons-twitch"></div>
+            <div class="sponsor-item dashicons dashicons-twitter"></div>
+            <div class="sponsor-item dashicons dashicons-amazon"></div>
+            <div class="sponsor-item dashicons dashicons-google"></div>
+            <div class="sponsor-item dashicons dashicons-facebook"></div>
+            <div class="sponsor-item dashicons dashicons-instagram"></div>
+            <div class="sponsor-item dashicons dashicons-youtube"></div>
+        </div>
+    </div>
+
+    <div class="marquee" style="margin: 2rem 0; font-size: 2rem">
+        <div class="marquee-group">
+            <h2>Our Sponsor</h2>
+            <h2 aria-hidden="true">Our Sponsor</h2>
+            <h2 aria-hidden="true">Our Sponsor</h2>
+            <h2 aria-hidden="true">Our Sponsor</h2>
+            <h2 aria-hidden="true">Our Sponsor</h2>
+        </div>
+
+        <div class="marquee-group" aria-hidden="true">
+            <h2>Our Sponsor</h2>
+            <h2>Our Sponsor</h2>
+            <h2>Our Sponsor</h2>
+            <h2>Our Sponsor</h2>
+            <h2>Our Sponsor</h2>
+        </div>
+    </div>
+
+    <div class="marquee reverse delay">
+        <div class="marquee-group flex">
+            <div class="sponsor-item dashicons dashicons-twitch"></div>
+            <div class="sponsor-item dashicons dashicons-twitter"></div>
+            <div class="sponsor-item dashicons dashicons-amazon"></div>
+            <div class="sponsor-item dashicons dashicons-google"></div>
+            <div class="sponsor-item dashicons dashicons-facebook"></div>
+            <div class="sponsor-item dashicons dashicons-instagram"></div>
+            <div class="sponsor-item dashicons dashicons-youtube"></div>
+        </div>
+
+        <div class="marquee-group flex gap" aria-hidden="true">
+            <div class="sponsor-item dashicons dashicons-twitch"></div>
+            <div class="sponsor-item dashicons dashicons-twitter"></div>
+            <div class="sponsor-item dashicons dashicons-amazon"></div>
+            <div class="sponsor-item dashicons dashicons-google"></div>
+            <div class="sponsor-item dashicons dashicons-facebook"></div>
+            <div class="sponsor-item dashicons dashicons-instagram"></div>
+            <div class="sponsor-item dashicons dashicons-youtube"></div>
+        </div>
+    </div>
+
+</body>
+</html>

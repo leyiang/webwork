@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Clock</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: grid;
+            place-items: center;
+        }
+
+        .clock-wrap {
+            --size: 400px;
+            --ring: 20px;
+            --cut: calc((var(--size) - var(--ring)) * 1/2);
+            --text-gap: 30px;
+
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .clock {
+            width: var(--size);
+            height: var(--size);
+            background-color: transparent;
+
+            background-image:
+                    repeating-conic-gradient(from -.5deg, #000 0deg 1deg, transparent 0deg 30deg),
+                    repeating-conic-gradient(from -.5deg, #DDD 0deg 1deg, transparent 0deg 6deg)
+            ;
+
+            -webkit-mask: radial-gradient(transparent var(--cut), red 0);
+
+            border-radius: 50%;
+            overflow: hidden;
+            background-position: center;
+        }
+
+        .panel {
+            width: calc(calc(var(--cut) - var(--text-gap)) * 2);
+            height: calc(calc(var(--cut) - var(--text-gap)) * 2);
+
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .num {
+            offset-path: path('M0,160a160,160 0 1,0 320,0a160,160 0 1,0 -320,0z');
+            position: absolute;
+            offset-rotate: 0deg;
+            offset-distance: calc(var(--i) * -10% / 1.2 - 25%);
+            font-size: 1.5rem;
+        }
+
+        .num::before {
+            counter-reset: num var(--i);
+            content: counter(num);
+        }
+
+        :is(.sec, .min, .hour) {
+            position: absolute;
+            bottom: 50%;
+            transform-origin: center bottom;
+        }
+
+        .clock-wrap {
+            --sec: 1s;
+            --min: calc(60 * var(--sec));
+            --hour: calc(60 * var(--min));
+        }
+
+        .sec {
+            width: 2px;
+            height: 140px;
+            background: red;
+            animation: rotate var(--min) steps(60) infinite;
+            animation-delay: calc(-1s * var(--ds));
+        }
+
+        .min {
+            width: 4px;
+            height: 100px;
+            background: #333;
+            animation: rotate var(--hour) steps(60) infinite;
+            animation-delay: calc(-1s * var(--dm));
+        }
+
+        .hour {
+            width: 4px;
+            height: 80px;
+            background: #000;
+            animation: rotate calc(12 * var(--hour) ) steps(60) infinite;
+            animation-delay: calc(-1s * var(--dh));
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .deco {
+            width: 10px;
+            height: 10px;
+            background: #FFF;
+            position: absolute;
+            border: 2px solid #000;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="clock-wrap">
+        <div class="clock">
+
+        </div>
+
+        <div class="panel">
+            <span class="num" style="--i: 1"></span>
+            <span class="num" style="--i: 2"></span>
+            <span class="num" style="--i: 3"></span>
+            <span class="num" style="--i: 4"></span>
+            <span class="num" style="--i: 5"></span>
+            <span class="num" style="--i: 6"></span>
+            <span class="num" style="--i: 7"></span>
+            <span class="num" style="--i: 8"></span>
+            <span class="num" style="--i: 9"></span>
+            <span class="num" style="--i: 10"></span>
+            <span class="num" style="--i: 11"></span>
+            <span class="num" style="--i: 12"></span>
+        </div>
+
+        <div class="sec"></div>
+        <div class="min"></div>
+        <div class="hour"></div>
+        <div class="deco"></div>
+    </div>
+
+    <script>
+        const date = new Date();
+        const s = date.getSeconds();
+        const m = date.getMinutes();
+        const h = date.getHours();
+
+        document.querySelector(".sec").style.setProperty("--ds", s);
+        document.querySelector(".min").style.setProperty("--dm", m * 60);
+        document.querySelector(".hour").style.setProperty("--dh", h * 3600);
+    </script>
+
+</body>
+</html>
