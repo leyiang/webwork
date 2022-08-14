@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Gradient</title>
+
+    <style>
+        .tip {
+            padding: .5em .8em calc(.5em + 5px);
+            border-radius: 5px;
+            position: relative;
+            color: #FFF;
+            overflow: hidden;
+            resize: both;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tip::before,
+        .tip::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("https://images.unsplash.com/photo-1660318493547-8ed693a0c5d6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80");
+            z-index: -1;
+        }
+
+        .tip::before {
+            border-radius: 5px;
+            clip-path: inset(0 0 5px 0 round 5px);
+        }
+
+        .tip::after {
+            --y: calc(100% - 5px);
+            clip-path: polygon(calc(50% - 5px) var(--y), 50% 100%, calc(50% + 5px) var(--y));
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tip">
+        Hello this is good
+    </div>
+
+</body>
+</html>
