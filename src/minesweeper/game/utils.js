@@ -40,3 +40,7 @@ const rand = max => Math.floor( Math.random() * max );
 const dist = (x1, y1, x2, y2) => {
     return Math.sqrt( (x2-x1) ** 2 + (y2 - y1) ** 2);
 }
+
+function getRandomItem( arr ) {
+    return arr[ Math.floor( Math.random() * arr.length ) ];
+}
