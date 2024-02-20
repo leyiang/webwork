@@ -108,9 +108,31 @@ export default class Arena {
     mark( x, y ) {
         const cell = this.get( x, y );
         if( ! cell ) return;
-        if( cell.open ) return;
+        if( cell.open ) return this.help(x, y);
 
         cell.flag = ! cell.flag;
+    }
+
+    help(x, y) {
+        console.log(x, y);
+        const list = this.mine_list.filter(mine => {
+            if( mine.flag ) return false;
+            if( mine.help ) return false;
+
+            return true;
+        });
+
+        list.sort( (a, b) => {
+            const distA = Math.hypot( (a.x - x), (a.y - y) );
+            const distB = Math.hypot( (b.x - x), (b.y - y) );
+
+            return distA - distB;
+        });
+
+        const mine = list[0];
+        if( ! mine ) return;
+
+        mine.flag = true;
     }
 
     floodFill(x, y) {

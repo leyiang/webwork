@@ -13,6 +13,7 @@ export default class Cell {
         this.diff = .1;
         this.speed = -.15;
         this.speedX = Math.random() % .05
+        this.help = false;
 
         this.cover = {
             x: this.x,
